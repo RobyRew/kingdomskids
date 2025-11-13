@@ -1,23 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Header from "@/components/Header";
+import Scroll from "@/components/Scroll";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Kingdom's Kids",
+  title: "Kingdom's Kids Ministry",
   description: "Kingdom's Kids Missionary Project",
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -25,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="antialiased bg-background font text-font"
       >
-        {children}
+        <Header />
+        <Scroll>{children}</Scroll>
+        <Footer />
       </body>
     </html>
   );

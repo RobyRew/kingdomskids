@@ -1,3 +1,15 @@
 @import "tailwindcss";
 
-/* Your custom styles will go here */
+@font-face {
+  font-family: 'Eloquia';
+  src: url('/fonts/Eloquia.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-background: rgb(233, 233, 233);
+  --color-font: rgb(34, 34, 34);
+  --font-family: 'Eloquia', ui-sans-serif, system-ui, sans-serif;
+}
