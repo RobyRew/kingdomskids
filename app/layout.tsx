@@ -17,7 +17,7 @@ export default function Layout({
   return (
     <html lang="en">
       <body
-        className="font-sans antialiased bg-off-white text-black"
+        className="font-sans antialiased bg-off-white text-black text-sm"
       >
         <Header />
         <Scroll>{children}</Scroll>
