@@ -34,6 +34,14 @@ const variants = cva(
           "font-medium",
           "text-black hover:text-orange active:text-orange",
         ],
+        burger: [
+          "text-black hover:text-orange active:text-orange",
+        ],
+        logo: [
+          "font-bold",
+          "text-xl text-black hover:text-orange active:text-orange",
+          "border-y border-black hover:border-orange active:border-orange",
+        ],
       },
       size: {
         primary: [
@@ -44,6 +52,12 @@ const variants = cva(
         ],
         tertiary: [
           "px-5 py-2.5"
+        ],
+        burger: [
+          "p-2.5"
+        ],
+        logo: [
+          "px-5 py-1.5"
         ],
       },
     },
