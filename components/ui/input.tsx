@@ -1,8 +1,8 @@
 import * as React from "react"
-import { cva, type VariantProps as Props } from "class-variance-authority"
 import { cn } from "@/lib/utils"
+import { cva, type VariantProps as Props } from "class-variance-authority"
 
-const variants = cva(
+const Variants = cva(
   [
     "w-full",
     "rounded-lg",
@@ -40,15 +40,15 @@ function Input({
   size,
   type,
   ...props
-}: React.ComponentProps<"input"> & Props<typeof variants>) {
+}: React.ComponentProps<"input"> & Props<typeof Variants>) {
   return (
     <input
       type={type}
       data-slot="input"
-      className={cn(variants({ variant, size, className }))}
+      className={cn(Variants({ variant, size, className }))}
       {...props}
     />
   )
 }
 
-export { Input, variants }
+export { Input, Variants }
