@@ -72,7 +72,7 @@ const umamiId  = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
     </script>
 
     {umamiSrc && umamiId && (
-      <script defer src={umamiSrc} data-website-id={umamiId} data-do-not-track="true"></script>
+      <script is:inline defer src={umamiSrc} data-website-id={umamiId} data-do-not-track="true"></script>
     )}
   </head>
 
