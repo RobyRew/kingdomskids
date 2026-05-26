@@ -1,18 +1,24 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { z } from 'astro:content';
 
 // ─────────────────────────────────────────────────────────────────────────
-// Content collections are DEFINED but not yet REGISTERED — the directories
-// hold only `.gitkeep` files and Astro's glob() loader logs a warning every
-// build for each empty collection ("No files found matching ...").
+// Schemas for upcoming content categories. No collections registered yet —
+// `src/content/` is empty. When you ship the first piece of content:
 //
-// When you're ready to publish a category, drop the first matching file
-// (e.g. `src/content/bible-stories/en/jonah.md`), then add the collection
-// to the `collections` export at the bottom of this file.
+//   1. Create the directory, e.g. `src/content/bible-stories/en/jonah.md`.
+//   2. Add the `astro/loaders` glob import + `defineCollection` import at
+//      the top of this file.
+//   3. Bind the schema to a collection:
 //
-// The Zod schemas live here unchanged so they document the expected shape
-// for content authors and stay in lockstep when the collection re-enters
-// the build pipeline.
+//        const bibleStories = defineCollection({
+//          loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/bible-stories' }),
+//          schema: bibleStoriesSchema,
+//        });
+//
+//   4. Register it in the `collections` export at the bottom.
+//
+// Keeping the schemas here (and only here) means content authors get a
+// single source of truth for the frontmatter shape, while the build stays
+// quiet until there's actual content to load.
 // ─────────────────────────────────────────────────────────────────────────
 
 const locale = z.enum(['en', 'es', 'ca', 'ro']);
@@ -22,11 +28,10 @@ const ageRange = z.object({
   max: z.number().int().gte(2).lte(18),
 });
 
-// ── Bible stories ───────────────────────────────────────────────────────
 export const bibleStoriesSchema = z.object({
   locale,
   title: z.string(),
-  reference: z.string(),               // e.g. "John 3:1-21"
+  reference: z.string(),
   testament: z.enum(['old', 'new']),
   summary: z.string().min(20).max(280),
   ageRange,
@@ -37,18 +42,16 @@ export const bibleStoriesSchema = z.object({
   featured: z.boolean().default(false),
 });
 
-// ── Memory verses ───────────────────────────────────────────────────────
 export const memoryVersesSchema = z.object({
   locale,
-  reference: z.string(),               // "Proverbs 22:6"
-  text: z.string(),                    // full verse text
+  reference: z.string(),
+  text: z.string(),
   theme: z.enum(['faith', 'love', 'hope', 'wisdom', 'praise', 'obedience', 'comfort', 'other']).default('other'),
   ageRange,
   order: z.number().int().default(100),
   featured: z.boolean().default(false),
 });
 
-// ── Songs ───────────────────────────────────────────────────────────────
 export const songsSchema = z.object({
   locale,
   title: z.string(),
@@ -64,7 +67,6 @@ export const songsSchema = z.object({
   featured: z.boolean().default(false),
 });
 
-// ── Lessons ─────────────────────────────────────────────────────────────
 export const lessonsSchema = z.object({
   locale,
   title: z.string(),
@@ -79,28 +81,4 @@ export const lessonsSchema = z.object({
   featured: z.boolean().default(false),
 });
 
-// Re-enable a collection by uncommenting its block + adding it to `collections`.
-//
-// const bibleStories = defineCollection({
-//   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/bible-stories' }),
-//   schema: bibleStoriesSchema,
-// });
-// const memoryVerses = defineCollection({
-//   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/memory-verses' }),
-//   schema: memoryVersesSchema,
-// });
-// const songs = defineCollection({
-//   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/songs' }),
-//   schema: songsSchema,
-// });
-// const lessons = defineCollection({
-//   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lessons' }),
-//   schema: lessonsSchema,
-// });
-
-export const collections = {
-  // 'bible-stories': bibleStories,
-  // 'memory-verses': memoryVerses,
-  // songs,
-  // lessons,
-};
+export const collections = {};
