@@ -1,0 +1,113 @@
+---
+import type { Locale } from '@i18n/utils';
+import { t, LOCALES, alternateLinks, localeIntl, path } from '@i18n/utils';
+import Header3 from '@components/react/Header3';
+import { Book, Chat, Music, Users, Document, Briefcase } from '@components/react/icons';
+import Footer from '@components/Footer.astro';
+import '@/styles/global.css';
+
+export interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description = t(locale, 'site.description'),
+  ogImage,
+  noindex = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${t(locale, 'site.title')}` : t(locale, 'site.title');
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const alternates = alternateLinks(locale, Astro.url.pathname);
+
+// Donation URL preserved from the legacy Next.js Header3 component.
+const donateHref = 'https://www.paypal.com/donate?token=LGQXzy0rkm5Lv11xVwj8b71nxnbIZg5UgIo15muoPzl-fXQe-BBOgLUOy7a7QPCIAKNKNNx6-3mmp9do';
+
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL;
+const umamiId  = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+---
+
+<!doctype html>
+<html lang={localeIntl(locale)} class="theme-loading">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fa9632" />
+
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {alternates.map(({ locale: loc, href }) => (
+      <link rel="alternate" hreflang={loc} href={new URL(href, Astro.site).toString()} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL('/en/', Astro.site).toString()} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={localeIntl(locale).replace('-', '_')} />
+    {LOCALES.filter((l) => l !== locale).map((l) => (
+      <meta property="og:locale:alternate" content={localeIntl(l).replace('-', '_')} />
+    ))}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>
+      // Reveal once the document is parsed (avoids any FOUC on the no-flash class).
+      document.documentElement.classList.remove('theme-loading');
+    </script>
+
+    {umamiSrc && umamiId && (
+      <script defer src={umamiSrc} data-website-id={umamiId} data-do-not-track="true"></script>
+    )}
+  </head>
+
+  <body class="font-sans antialiased bg-white-off text-black text-md min-h-dvh flex flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm">
+      Skip to content
+    </a>
+
+    <Header3
+      client:load
+      homeHref={path(locale)}
+      logoLabel="Kingdom's Kids"
+      searchPlaceholder={t(locale, 'nav.search')}
+      donateLabel={t(locale, 'nav.donate')}
+      donateHref={donateHref}
+      volunteerLabel={t(locale, 'nav.volunteer')}
+      volunteerHref={path(locale, 'volunteer')}
+      topLinks={[
+        { href: path(locale, 'testimonies'), label: t(locale, 'nav.testimonies') },
+        { href: path(locale, 'gallery'),     label: t(locale, 'nav.gallery') },
+      ]}
+      dropdownItems={[
+        { href: path(locale, 'lessons'),   label: t(locale, 'nav.lessons'),   icon: Book },
+        { href: path(locale, 'verses'),    label: t(locale, 'nav.verses'),    icon: Chat },
+        { href: path(locale, 'songs'),     label: t(locale, 'nav.songs'),     icon: Music },
+        { href: path(locale, 'games'),     label: t(locale, 'nav.games'),     icon: Users },
+        { href: path(locale, 'resources'), label: t(locale, 'nav.resources'), icon: Document },
+        { href: path(locale, 'baggage'),   label: 'Baggage',                  icon: Briefcase },
+      ]}
+    />
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+  </body>
+</html>

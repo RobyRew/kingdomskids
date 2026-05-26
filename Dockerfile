@@ -1,32 +1,35 @@
-# Build stage
-FROM node:20-alpine AS builder
-
+# syntax=docker/dockerfile:1.10
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 1: build — Node 22 LTS
+# ─────────────────────────────────────────────────────────────────────────────
+FROM node:22-alpine AS build
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+RUN apk add --no-cache --virtual .build-deps libc6-compat \
+ && apk add --no-cache vips-dev
 
-# Install dependencies
-RUN npm ci
+# npm install (not ci) + --legacy-peer-deps to survive missing lockfile
+# OR peer-dep version clashes. Reproducible only when lockfile is committed.
+COPY package.json package-lock.json* ./
+RUN npm install --no-audit --no-fund --legacy-peer-deps --prefer-offline
 
-# Copy source files
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Production stage
-FROM node:20-alpine AS runner
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 2: serve — unprivileged nginx
+# ─────────────────────────────────────────────────────────────────────────────
+FROM nginxinc/nginx-unprivileged:1.29-alpine AS runtime
 
-WORKDIR /app
+USER root
+RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build --chown=nginx:nginx /app/dist /usr/share/nginx/html
+USER nginx
 
-ENV NODE_ENV=production
+EXPOSE 8080
 
-# Copy built application
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://127.0.0.1:8080/en/ || exit 1
 
-EXPOSE 3000
-
-CMD ["node", "server.js"]
+CMD ["nginx", "-g", "daemon off;"]

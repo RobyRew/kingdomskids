@@ -1,0 +1,43 @@
+---
+import type { Locale } from '@i18n/utils';
+import { LOCALES, t, path } from '@i18n/utils';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Locale };
+---
+
+<BaseLayout locale={lang}>
+  <section class="mx-auto max-w-5xl px-5 py-16 sm:py-24 text-center">
+    <h1 class="text-4xl font-bold tracking-tight text-black sm:text-6xl">
+      {t(lang, 'hero.headline')}
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-black/80 sm:text-xl">
+      {t(lang, 'hero.subheadline')}
+    </p>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href={path(lang, 'stories')}
+        class="inline-flex items-center gap-2 rounded-lg bg-black px-5 py-2.5 font-medium text-white transition-colors duration-300 hover:bg-transparent hover:text-orange hover:border-orange border border-black"
+      >
+        {t(lang, 'hero.ctaPrimary')} →
+      </a>
+      <a
+        href={path(lang, 'volunteer')}
+        class="inline-flex items-center gap-2 rounded-lg border border-black bg-transparent px-5 py-2.5 font-medium text-black transition-colors duration-300 hover:bg-orange hover:text-white hover:border-orange"
+      >
+        {t(lang, 'hero.ctaSecondary')}
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Placeholder featured-stories block ── -->
+  <section class="mx-auto max-w-5xl px-5 py-12">
+    <h2 class="mb-4 text-2xl font-bold tracking-tight text-black">{t(lang, 'sections.featuredStories')}</h2>
+    <p class="text-black/70">{t(lang, 'placeholder.comingSoonBody')}</p>
+  </section>
+</BaseLayout>

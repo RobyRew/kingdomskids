@@ -1,0 +1,43 @@
+{
+  "site": {
+    "title": "Kingdom's Kids",
+    "tagline": "Platformă creștină pentru creșterea spirituală a copiilor",
+    "description": "Kingdom's Kids — povești biblice interactive, versete de memorat, cântece și lecții pentru copii care cresc în credință."
+  },
+  "nav": {
+    "home": "Acasă",
+    "stories": "Povești",
+    "verses": "Versete",
+    "songs": "Cântece",
+    "lessons": "Lecții",
+    "games": "Jocuri",
+    "resources": "Resurse",
+    "testimonies": "Mărturii",
+    "gallery": "Galerie",
+    "volunteer": "Voluntariat",
+    "donate": "Donează",
+    "search": "Caută"
+  },
+  "hero": {
+    "headline": "Kingdom's Kids",
+    "subheadline": "Povești biblice, versete, cântece și lecții — făcute pentru copii care cresc în credință.",
+    "ctaPrimary": "Vezi poveștile",
+    "ctaSecondary": "Cum să fii voluntar"
+  },
+  "sections": {
+    "featuredStories": "Povești recomandate",
+    "memoryVerse": "Versetul săptămânii",
+    "comingSoon": "În curând"
+  },
+  "placeholder": {
+    "comingSoonTitle": "În curând",
+    "comingSoonBody": "Această secțiune face parte din roadmap-ul v0.2. Aici vor apărea poveștile biblice, cântecele și lecțiile. Revino curând!",
+    "donateNote": "100% din donații merg către slujire."
+  },
+  "footer": {
+    "tagline": "\"Învață-l pe copil calea pe care trebuie să o urmeze.\" — Proverbe 22:6 — © {{year}} Kingdom's Kids"
+  },
+  "fallback": {
+    "translationPending": "Această pagină nu a fost încă tradusă în această limbă. Mai jos se afișează versiunea în engleză."
+  }
+}

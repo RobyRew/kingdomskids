@@ -1,0 +1,29 @@
+---
+import type { Locale } from '@i18n/utils';
+import { t } from '@i18n/utils';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+export interface Props {
+  locale: Locale;
+  navKey: string;     // e.g. 'nav.stories' — used for page title
+  bodyKey?: string;   // optional override of the body text
+}
+
+const { locale, navKey, bodyKey = 'placeholder.comingSoonBody' } = Astro.props;
+const title = t(locale, navKey);
+const body = t(locale, bodyKey);
+---
+
+<BaseLayout locale={locale} title={title}>
+  <section class="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+    <p class="font-mono text-sm uppercase tracking-widest text-orange">
+      {t(locale, 'sections.comingSoon')}
+    </p>
+    <h1 class="mt-2 text-4xl font-bold tracking-tight text-black sm:text-5xl">
+      {title}
+    </h1>
+    <p class="mt-4 max-w-2xl text-base text-black/70 sm:text-lg">
+      {body}
+    </p>
+  </section>
+</BaseLayout>

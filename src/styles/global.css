@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@font-face {
+  font-family: 'Bantayog';
+  src: url('/fonts/Bantayog.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Tailwind v4 theme — preserved from the Next.js version ─────────────────── */
+@theme {
+  --color-white: rgb(255, 255, 255);
+  --color-white-off: rgb(235, 235, 235);
+  --color-gray: rgb(220, 220, 220);
+  --color-gray-dark: rgb(210, 210, 210);
+  --color-black: rgb(35, 35, 35);
+  --color-orange: rgb(250, 150, 50);
+
+  --font-sans: 'Bantayog', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Reduced-motion respect ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── No-flash theme helper (kept for future dark-mode hook) ─────────────── */
+.theme-loading { visibility: hidden; }
+
+/* ── Print ──────────────────────────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+}

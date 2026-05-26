@@ -1,8 +1,12 @@
 node_modules
-.next
+dist
+.astro
 .git
-.gitignore
-README.md
-*.md
-.DS_Store
+.github
+.vscode
+.idea
 .env*
+*.log
+.DS_Store
+legacy
+README.md

@@ -1,0 +1,11 @@
+---
+import type { Locale } from '@i18n/utils';
+import { LOCALES } from '@i18n/utils';
+import PlaceholderPage from '@components/PlaceholderPage.astro';
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+const { lang } = Astro.params as { lang: Locale };
+---
+<PlaceholderPage locale={lang} navKey="nav.verses" />

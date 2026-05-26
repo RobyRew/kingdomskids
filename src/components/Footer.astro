@@ -1,0 +1,19 @@
+---
+import type { Locale } from '@i18n/utils';
+import { t } from '@i18n/utils';
+
+export interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-12 border-t border-gray pt-8 pb-12 no-print">
+  <div class="mx-auto max-w-7xl px-5">
+    <div class="flex flex-col gap-2 text-sm text-black/70 sm:flex-row sm:items-center sm:justify-between">
+      <p>{t(locale, 'footer.tagline', { year })}</p>
+      <p>
+        <a href="https://kingdomskids.robyrew.com" class="hover:text-orange hover:underline">kingdomskids.robyrew.com</a>
+      </p>
+    </div>
+  </div>
+</footer>

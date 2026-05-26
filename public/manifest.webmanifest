@@ -1,0 +1,13 @@
+{
+  "name": "Kingdom's Kids",
+  "short_name": "KK",
+  "description": "Faith-based platform for kids' spiritual growth",
+  "start_url": "/en/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ebebeb",
+  "theme_color": "#fa9632",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

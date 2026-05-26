@@ -10,7 +10,7 @@
 
 **🌟 Nurturing Faith, Inspiring Young Hearts 🌟**
 
-[Live Website](https://kingdomskids.org) • [Report Bug](https://github.com/lhunyadi/kingdomskids/issues) • [Request Feature](https://github.com/lhunyadi/kingdomskids/issues)
+[Live Website](https://kingdomskids.robyrew.com) • [Report Bug](https://github.com/lhunyadi/kingdomskids/issues) • [Request Feature](https://github.com/lhunyadi/kingdomskids/issues)
 
 </div>
 
@@ -228,7 +228,7 @@ This project is currently unlicensed. Please contact the maintainers for usage p
 
 ## 📞 Contact & Support
 
-- **Website**: [kingdomskids.org](https://kingdomskids.org)
+- **Website**: [kingdomskids.robyrew.com](https://kingdomskids.robyrew.com)
 - **GitHub Issues**: [Report bugs or request features](https://github.com/lhunyadi/kingdomskids/issues)
 - **Maintainer**: [@lhunyadi](https://github.com/lhunyadi)
 

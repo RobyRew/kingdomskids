@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kingdomskids.robyrew.com/sitemap-index.xml

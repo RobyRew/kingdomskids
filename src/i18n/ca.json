@@ -1,0 +1,43 @@
+{
+  "site": {
+    "title": "Kingdom's Kids",
+    "tagline": "Plataforma cristiana per al creixement espiritual dels nens",
+    "description": "Kingdom's Kids — històries bíbliques interactives, versets per memoritzar, cançons i llicons per a nens que creixen en la seva fe."
+  },
+  "nav": {
+    "home": "Inici",
+    "stories": "Històries",
+    "verses": "Versets",
+    "songs": "Cançons",
+    "lessons": "Llicons",
+    "games": "Jocs",
+    "resources": "Recursos",
+    "testimonies": "Testimonis",
+    "gallery": "Galeria",
+    "volunteer": "Voluntariat",
+    "donate": "Donar",
+    "search": "Cercar"
+  },
+  "hero": {
+    "headline": "Kingdom's Kids",
+    "subheadline": "Històries bíbliques, versets, cançons i llicons — fetes per a nens que creixen en la seva fe.",
+    "ctaPrimary": "Veure històries",
+    "ctaSecondary": "Com ser voluntari"
+  },
+  "sections": {
+    "featuredStories": "Històries destacades",
+    "memoryVerse": "Verset de la setmana",
+    "comingSoon": "Aviat"
+  },
+  "placeholder": {
+    "comingSoonTitle": "Aviat",
+    "comingSoonBody": "Aquesta secció forma part del roadmap v0.2. Aquí apareixeran les històries bíbliques, cançons i llicons. Torna aviat!",
+    "donateNote": "El 100% de les donacions van al ministeri."
+  },
+  "footer": {
+    "tagline": "\"Instrueix l'infant en el seu camí.\" — Proverbis 22:6 — © {{year}} Kingdom's Kids"
+  },
+  "fallback": {
+    "translationPending": "Aquesta pàgina encara no s'ha traduït a aquest idioma. Es mostra la versió en anglès a continuació."
+  }
+}

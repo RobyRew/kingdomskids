@@ -1,0 +1,43 @@
+{
+  "site": {
+    "title": "Kingdom's Kids",
+    "tagline": "Plataforma cristiana para el crecimiento espiritual de los niños",
+    "description": "Kingdom's Kids — historias bíblicas interactivas, versículos para memorizar, canciones y lecciones para niños que crecen en su fe."
+  },
+  "nav": {
+    "home": "Inicio",
+    "stories": "Historias",
+    "verses": "Versículos",
+    "songs": "Canciones",
+    "lessons": "Lecciones",
+    "games": "Juegos",
+    "resources": "Recursos",
+    "testimonies": "Testimonios",
+    "gallery": "Galería",
+    "volunteer": "Voluntariado",
+    "donate": "Donar",
+    "search": "Buscar"
+  },
+  "hero": {
+    "headline": "Kingdom's Kids",
+    "subheadline": "Historias bíblicas, versículos, canciones y lecciones — hechas para niños que crecen en su fe.",
+    "ctaPrimary": "Ver historias",
+    "ctaSecondary": "Cómo ser voluntario"
+  },
+  "sections": {
+    "featuredStories": "Historias destacadas",
+    "memoryVerse": "Versículo de la semana",
+    "comingSoon": "Próximamente"
+  },
+  "placeholder": {
+    "comingSoonTitle": "Próximamente",
+    "comingSoonBody": "Esta sección forma parte del roadmap v0.2. Aquí aparecerán las historias bíblicas, canciones y lecciones. ¡Vuelve pronto!",
+    "donateNote": "El 100% de las donaciones se destinan al ministerio."
+  },
+  "footer": {
+    "tagline": "\"Instruye al niño en su camino.\" — Proverbios 22:6 — © {{year}} Kingdom's Kids"
+  },
+  "fallback": {
+    "translationPending": "Esta página aún no se ha traducido a este idioma. Se muestra la versión en inglés a continuación."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "site": {
+    "title": "Kingdom's Kids",
+    "tagline": "Faith-based platform for kids' spiritual growth",
+    "description": "Kingdom's Kids — interactive Bible stories, memory verses, songs and lessons for children growing in their faith."
+  },
+  "nav": {
+    "home": "Home",
+    "stories": "Stories",
+    "verses": "Verses",
+    "songs": "Songs",
+    "lessons": "Lessons",
+    "games": "Games",
+    "resources": "Resources",
+    "testimonies": "Testimonies",
+    "gallery": "Gallery",
+    "volunteer": "Volunteer",
+    "donate": "Donate",
+    "search": "Search"
+  },
+  "hero": {
+    "headline": "Kingdom's Kids",
+    "subheadline": "Bible stories, memory verses, songs and lessons — made for kids growing in their faith.",
+    "ctaPrimary": "Explore stories",
+    "ctaSecondary": "How to volunteer"
+  },
+  "sections": {
+    "featuredStories": "Featured stories",
+    "memoryVerse": "Memory verse of the week",
+    "comingSoon": "Coming soon"
+  },
+  "placeholder": {
+    "comingSoonTitle": "Coming soon",
+    "comingSoonBody": "This section is part of the v0.2 roadmap. Bible stories, songs and lessons will land here. Come back soon!",
+    "donateNote": "100% of donations go to the ministry."
+  },
+  "footer": {
+    "tagline": "\"Train up a child in the way he should go.\" — Proverbs 22:6 — © {{year}} Kingdom's Kids"
+  },
+  "fallback": {
+    "translationPending": "This page hasn't been translated to this language yet. Showing the English version below."
+  }
+}
