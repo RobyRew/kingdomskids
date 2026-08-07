@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "SF Pro";
+  src: url("/fonts/sf.woff2") format("woff2");
+  font-weight: 1 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "SF Pro", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  --color-text: rgb(30, 30, 35);
+  --color-background: rgb(255, 255, 255);
+  --color-primary: rgb(245, 245, 250);
+  --color-secondary: rgb(210, 210, 215);
+  --color-accent: rgb(255, 135, 50);
+}
+
+@theme {
+  --spacing-gutter: 15px;
+  --radius-tile: 5px;
+}
+
+@utility squircle {
+  corner-shape: squircle;
+}
+
+@layer base {
+  html {
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+}
