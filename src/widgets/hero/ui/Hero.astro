@@ -1,17 +1,19 @@
 <section
   data-hero
   data-lock
-  class="grid min-h-screen place-items-center p-gutter"
+  class="p-gutter grid min-h-screen place-items-center"
 >
   <blockquote
     cite="https://www.biblegateway.com/passage/?search=Matthew%2019%3A14"
     class="max-w-[1000px]"
   >
-    <p
-      data-line
-      class="text-[50px] leading-tight font-semibold tracking-tight"
-    >
-      <span data-intro class="inline-block"><span class="text-accent">Jesus</span> said</span><span data-verse>, "Let the little <span class="text-accent">children</span> come to me, and do not hinder them, for the kingdom of heaven belongs to such as these."</span>
+    <p data-line class="text-[50px] leading-tight font-semibold tracking-tight">
+      <span data-intro class="inline-block"
+        ><span class="text-accent">Jesus</span> said</span
+      ><span data-verse
+        >, "Let the little <span class="text-accent">children</span> come to me, and
+        do not hinder them, for the kingdom of heaven belongs to such as these."</span
+      >
     </p>
     <div class="mt-10 overflow-hidden">
       <cite
@@ -25,7 +27,7 @@
 </section>
 
 <script>
-  import { hero } from "../model/timeline";
+  import { hero } from "@/widgets/hero/model/timeline";
 
   const root = document.querySelector<HTMLElement>("[data-hero]");
   if (root) hero(root);

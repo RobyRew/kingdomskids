@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "SF Pro";
-  src: url("/fonts/sf.woff2") format("woff2");
+  src: url("./sf.woff2") format("woff2");
   font-weight: 1 1000;
   font-style: normal;
   font-display: swap;
@@ -31,11 +31,9 @@
 
 @layer base {
   html {
-    scrollbar-width: none;
-  }
-
-  ::-webkit-scrollbar {
-    display: none;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-secondary) transparent;
   }
 
   body {
