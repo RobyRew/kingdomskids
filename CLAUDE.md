@@ -62,7 +62,7 @@ own `pages` name, which Astro has taken. Do not create them before then.
 
 - **Never add `prefers-reduced-motion` handling.** Not in CSS, not in
   `gsap.matchMedia`. Do not propose it.
-- No comment banners, no decorative blank lines. Comments explain *why*.
+- No comment banners, no decorative blank lines. Comments explain _why_.
 - Data attributes are behaviour hooks; classes are for styling. Never query
   JavaScript by class name.
 - Colour tokens are `text`, `background`, `primary`, `secondary`, `accent`.

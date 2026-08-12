@@ -21,7 +21,10 @@ const cleanCode = {
   "max-params": ["error", 3],
 
   // Files around 200 lines. One responsibility per file.
-  "max-lines": ["error", { max: 200, skipBlankLines: true, skipComments: true }],
+  "max-lines": [
+    "error",
+    { max: 200, skipBlankLines: true, skipComments: true },
+  ],
   "max-classes-per-file": ["error", 1],
 
   // Guard clauses instead of nesting.

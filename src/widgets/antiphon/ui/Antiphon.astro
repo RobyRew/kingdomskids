@@ -1,0 +1,13 @@
+<section
+  data-antiphon
+  class="from-background to-primary p-gutter grid min-h-[50svh] place-items-center bg-linear-to-b"
+>
+  <p data-line class="text-[50px] font-semibold tracking-tight">So we did.</p>
+</section>
+
+<script>
+  import { antiphon } from "@/widgets/antiphon/model/timeline";
+
+  const root = document.querySelector<HTMLElement>("[data-antiphon]");
+  if (root) antiphon(root);
+</script>

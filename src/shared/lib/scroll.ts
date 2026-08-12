@@ -11,7 +11,6 @@ export function scroll() {
     wrapper: "#smooth-wrapper",
     content: "#smooth-content",
     smooth: 1,
-    effects: true,
   });
 
   smoother.scrollTop(0);

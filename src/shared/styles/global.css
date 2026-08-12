@@ -31,7 +31,6 @@
 
 @layer base {
   html {
-    scrollbar-gutter: stable both-edges;
     scrollbar-width: thin;
     scrollbar-color: var(--color-secondary) transparent;
   }
