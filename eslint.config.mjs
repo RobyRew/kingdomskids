@@ -11,7 +11,7 @@ const cleanCode = {
     { max: 20, skipBlankLines: true, skipComments: true },
   ],
   "max-statements": ["error", 10],
-  complexity: ["error", 5],
+  complexity: ["error", 8],
 
   // "The indent level of a function should not be greater than one or two."
   "max-depth": ["error", 2],

@@ -2,8 +2,9 @@ import gsap from "gsap";
 import { ScrollTrigger as Trigger } from "gsap/ScrollTrigger";
 import { SplitText as Text } from "gsap/SplitText";
 import { ScrollSmoother as Smoother } from "gsap/ScrollSmoother";
+import { DrawSVGPlugin as Draw } from "gsap/DrawSVGPlugin";
 
-gsap.registerPlugin(Trigger, Text, Smoother);
+gsap.registerPlugin(Trigger, Text, Smoother, Draw);
 
 interface Parts {
   root: HTMLElement;
@@ -11,6 +12,7 @@ interface Parts {
   intro: HTMLElement;
   verse: HTMLElement;
   reference: HTMLElement;
+  drawing: SVGSVGElement;
 }
 
 function collect(root: HTMLElement): Parts | undefined {
@@ -18,9 +20,10 @@ function collect(root: HTMLElement): Parts | undefined {
   const intro = root.querySelector<HTMLElement>("[data-intro]");
   const verse = root.querySelector<HTMLElement>("[data-verse]");
   const reference = root.querySelector<HTMLElement>("[data-reference]");
+  const drawing = root.querySelector<SVGSVGElement>("[data-drawing]");
 
-  if (!line || !intro || !verse || !reference) return undefined;
-  return { root, line, intro, verse, reference };
+  if (!line || !intro || !verse || !reference || !drawing) return undefined;
+  return { root, line, intro, verse, reference, drawing };
 }
 
 function centre({ line, intro }: Parts) {
@@ -48,12 +51,24 @@ function greet({ intro }: Parts) {
   });
 }
 
-function sequence({ intro, reference }: Parts, words: Element[]) {
+function ordered(drawing: SVGSVGElement) {
+  return [...drawing.querySelectorAll("path")].sort(
+    (first, second) => first.getBBox().y - second.getBBox().y,
+  );
+}
+
+function sequence({ intro, reference, drawing }: Parts, words: Element[]) {
   return gsap
     .timeline({ defaults: { ease: "none", duration: 0.5 } })
     .to(intro, { x: 0, ease: "power2.inOut" })
+    .addLabel("verse")
     .from(words, { yPercent: 100, stagger: { amount: 1 } })
-    .from(reference, { yPercent: -100 }, ">-0.1");
+    .from(reference, { yPercent: -100 }, ">-0.1")
+    .from(
+      ordered(drawing),
+      { drawSVG: 0, duration: 1, stagger: { amount: 1.5 } },
+      "verse",
+    );
 }
 
 function drive(

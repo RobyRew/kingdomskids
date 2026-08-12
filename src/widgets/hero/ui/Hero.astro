@@ -1,18 +1,30 @@
+---
+import Jesus from "@/widgets/hero/ui/jesus.svg";
+---
+
 <section
   data-hero
   data-lock
-  class="p-gutter grid min-h-screen place-items-center"
+  class="p-gutter relative grid min-h-screen place-items-center"
 >
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden"
+  >
+    <Jesus data-drawing class="text-secondary w-[min(100%,1500px)]" />
+  </div>
+
   <blockquote
-    cite="https://www.biblegateway.com/passage/?search=Matthew%2019%3A14"
-    class="max-w-[1000px]"
+    cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
+    class="relative max-w-[1000px]"
   >
     <p data-line class="text-[50px] leading-tight font-semibold tracking-tight">
       <span data-intro class="inline-block"
         ><span class="text-accent">Jesus</span> said</span
       ><span data-verse
-        >, "Let the little <span class="text-accent">children</span> come to me, and
-        do not hinder them, for the kingdom of heaven belongs to such as these."</span
+        >: "Therefore go and make <span class="text-accent">disciples</span> of all
+        <span class="text-accent"> nations</span>, baptizing them in the name of the
+        Father and of the Son and of the Holy Spirit."</span
       >
     </p>
     <div class="mt-10 overflow-hidden">
@@ -20,7 +32,7 @@
         data-reference
         class="block text-[15px] font-[15] tracking-widest not-italic"
       >
-        MATTHEW 19:14
+        MATTHEW 28:19
       </cite>
     </div>
   </blockquote>
