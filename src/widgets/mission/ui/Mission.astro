@@ -1,0 +1,14 @@
+<section data-mission class="p-gutter bg-primary">
+  <article
+    data-tile
+    class="bg-background rounded-tile squircle p-inset min-h-svh"
+  >
+  </article>
+</section>
+
+<script>
+  import { mission } from "@/widgets/mission/model/timeline";
+
+  const root = document.querySelector<HTMLElement>("[data-mission]");
+  if (root) mission(root);
+</script>

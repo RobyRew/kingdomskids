@@ -7,7 +7,7 @@ import { DrawSVGPlugin as Draw } from "gsap/DrawSVGPlugin";
 gsap.registerPlugin(Trigger, Text, Smoother, Draw);
 
 interface Parts {
-  root: HTMLElement;
+  frame: HTMLElement;
   line: HTMLElement;
   intro: HTMLElement;
   verse: HTMLElement;
@@ -16,20 +16,24 @@ interface Parts {
 }
 
 function collect(root: HTMLElement): Parts | undefined {
+  const frame = root.querySelector<HTMLElement>("[data-pin]");
   const line = root.querySelector<HTMLElement>("[data-line]");
   const intro = root.querySelector<HTMLElement>("[data-intro]");
   const verse = root.querySelector<HTMLElement>("[data-verse]");
   const reference = root.querySelector<HTMLElement>("[data-reference]");
   const drawing = root.querySelector<SVGSVGElement>("[data-drawing]");
 
-  if (!line || !intro || !verse || !reference || !drawing) return undefined;
-  return { root, line, intro, verse, reference, drawing };
+  if (!frame || !line || !intro || !verse || !reference || !drawing)
+    return undefined;
+  return { frame, line, intro, verse, reference, drawing };
 }
 
 function centre({ line, intro }: Parts) {
   gsap.set(intro, { x: (line.clientWidth - intro.offsetWidth) / 2 });
 }
 
+// power2.out where the other reveals use power1.inOut: this tween resolves a
+// blur rather than travel, and the long tail is where the focus lands.
 function greet({ intro }: Parts) {
   return Text.create(intro, {
     type: "words",
@@ -57,37 +61,37 @@ function ordered(drawing: SVGSVGElement) {
   );
 }
 
-function sequence({ intro, reference, drawing }: Parts, words: Element[]) {
+function drive(frame: HTMLElement, onSettled: () => void) {
+  return {
+    trigger: frame,
+    start: "top 0%",
+    end: "+=250%",
+    scrub: 1,
+    once: true,
+    onLeave: (self: Trigger) => {
+      self.animation?.progress(1);
+      onSettled();
+    },
+  };
+}
+
+function sequence(parts: Parts, words: Element[], onSettled: () => void) {
+  const { frame, intro, reference, drawing } = parts;
+
   return gsap
-    .timeline({ defaults: { ease: "none", duration: 0.5 } })
+    .timeline({
+      defaults: { ease: "none", duration: 0.5 },
+      scrollTrigger: drive(frame, onSettled),
+    })
     .to(intro, { x: 0, ease: "power2.inOut" })
     .addLabel("verse")
     .from(words, { yPercent: 100, stagger: { amount: 1 } })
-    .from(reference, { yPercent: -100 }, ">-0.1")
+    .from(reference, { yPercent: -100, duration: 1 }, ">-0.1")
     .from(
       ordered(drawing),
       { drawSVG: 0, duration: 1, stagger: { amount: 1.5 } },
       "verse",
     );
-}
-
-function drive(
-  root: HTMLElement,
-  animation: gsap.core.Timeline,
-  onSettled: () => void,
-) {
-  Trigger.create({
-    trigger: root,
-    start: "top 0%",
-    end: "+=250%",
-    scrub: 1,
-    once: true,
-    animation,
-    onLeave: () => {
-      animation.progress(1);
-      onSettled();
-    },
-  });
 }
 
 function reveal(parts: Parts) {
@@ -101,11 +105,9 @@ function reveal(parts: Parts) {
     onSplit: (self) => {
       if (!settled) centre(parts);
 
-      const animation = sequence(parts, self.words);
-      drive(parts.root, animation, () => {
+      return sequence(parts, self.words, () => {
         settled = true;
       });
-      return animation;
     },
   });
 }
@@ -115,7 +117,7 @@ export function hero(root: HTMLElement) {
   if (!parts) return;
 
   Trigger.create({
-    trigger: root,
+    trigger: parts.frame,
     start: "top 0%",
     end: "+=250%",
     pin: true,

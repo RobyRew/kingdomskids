@@ -10,6 +10,7 @@
 
 @theme {
   --font-sans: "SF Pro", ui-sans-serif, system-ui, sans-serif;
+  --text-display: 50px;
 }
 
 @theme {
@@ -22,7 +23,9 @@
 
 @theme {
   --spacing-gutter: 15px;
-  --radius-tile: 5px;
+  --spacing-bento: 20px;
+  --spacing-inset: 40px;
+  --radius-tile: 20px;
 }
 
 @utility squircle {

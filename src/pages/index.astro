@@ -2,23 +2,13 @@
 import Layout from "@/shared/ui/Layout.astro";
 import Hero from "@/widgets/hero/ui/Hero.astro";
 import Antiphon from "@/widgets/antiphon/ui/Antiphon.astro";
+import Mission from "@/widgets/mission/ui/Mission.astro";
 ---
 
 <Layout title="Kingdom's Kids">
   <main>
-    <section class="gap-gutter p-gutter grid">
-      <article class="bg-primary rounded-tile squircle p-gutter">
-        <Hero />
-      </article>
-    </section>
-
+    <Hero />
     <Antiphon />
-
-    <section class="gap-gutter p-gutter bg-primary grid">
-      <article
-        class="bg-background rounded-tile squircle p-gutter"
-      >
-      </article>
-    </section>
+    <Mission />
   </main>
 </Layout>

@@ -1,41 +1,48 @@
 ---
-import Jesus from "@/widgets/hero/ui/jesus.svg";
+import Drawing from "@/widgets/hero/ui/jesus.svg";
 ---
 
-<section
-  data-hero
-  data-lock
-  class="p-gutter relative grid min-h-screen place-items-center"
->
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden"
-  >
-    <Jesus data-drawing class="text-secondary w-[min(100%,1500px)]" />
-  </div>
+<section data-hero class="p-gutter grid">
+  <article class="bg-primary rounded-tile squircle p-gutter">
+    <div
+      data-pin
+      data-lock
+      class="p-gutter relative grid min-h-svh place-items-center"
+    >
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden"
+      >
+        <Drawing data-drawing class="text-secondary w-[min(100%,1500px)]" />
+      </div>
 
-  <blockquote
-    cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
-    class="relative max-w-[1000px]"
-  >
-    <p data-line class="text-[50px] leading-tight font-semibold tracking-tight">
-      <span data-intro class="inline-block"
-        ><span class="text-accent">Jesus</span> said</span
-      ><span data-verse
-        >: "Therefore go and make <span class="text-accent">disciples</span> of all
-        <span class="text-accent"> nations</span>, baptizing them in the name of
-        the Father and of the Son and of the Holy Spirit."</span
+      <blockquote
+        cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
+        class="relative max-w-[1000px]"
       >
-    </p>
-    <div class="mt-10 overflow-hidden">
-      <cite
-        data-reference
-        class="block text-[15px] font-[15] tracking-widest not-italic"
-      >
-        MATTHEW 28:19
-      </cite>
+        <p
+          data-line
+          class="text-display leading-tight font-semibold tracking-tight"
+        >
+          <span data-intro class="inline-block"
+            ><span class="text-accent">Jesus</span> said</span
+          ><span data-verse
+            >: "Therefore go and make <span class="text-accent">disciples</span> of
+            all <span class="text-accent"> nations</span>, baptizing them in the
+            name of the Father and of the Son and of the Holy Spirit."</span
+          >
+        </p>
+        <div class="mt-10 overflow-hidden">
+          <cite
+            data-reference
+            class="block text-[15px] font-[15] tracking-widest not-italic"
+          >
+            MATTHEW 28:19
+          </cite>
+        </div>
+      </blockquote>
     </div>
-  </blockquote>
+  </article>
 </section>
 
 <script>

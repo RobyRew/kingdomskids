@@ -7,11 +7,11 @@ export function antiphon(root: HTMLElement) {
   const line = root.querySelector<HTMLElement>("[data-line]");
   if (!line) return;
 
-  gsap.from(line, {
-    opacity: 0,
-    y: 25,
-    duration: 0.75,
-    ease: "power2.out",
-    scrollTrigger: { trigger: line, start: "top 75%", once: true },
-  });
+  gsap
+    .timeline({
+      defaults: { ease: "power1.inOut", stagger: 0.15 },
+      scrollTrigger: { trigger: line, start: "top 75%", once: true },
+    })
+    .from(line, { y: 25, duration: 0.75 }, 0)
+    .from(line, { opacity: 0, duration: 1 }, 0);
 }
