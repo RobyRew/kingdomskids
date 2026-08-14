@@ -99,6 +99,13 @@ These cost real debugging time. They are not inferable from the code.
 
 ## Workflow
 
+- **Read the existing implementation before writing a new one.** Anything you
+  are about to build already exists somewhere: a verse block, a display line,
+  a tile, a scrubbed timeline, a widget entry script. Open that file, copy its
+  structure, keep its class order, its wrapper elements and its data
+  attributes. Inventing a second shape for a solved problem is the error, and
+  the diff will be missing the parts that made the first one work. Deviating
+  is a decision to state out loud, never a default.
 - Run `npm run build` after changes. Show the output, do not assert success.
 - The lint hook blocks on `Edit`/`Write` to `.ts`, `.mjs`, `.astro`. Violations
   come back as errors before the user sees the code.

@@ -10,7 +10,6 @@
 
 @theme {
   --font-sans: "SF Pro", ui-sans-serif, system-ui, sans-serif;
-  --text-display: 50px;
 }
 
 @theme {
@@ -23,13 +22,45 @@
 
 @theme {
   --spacing-gutter: 15px;
-  --spacing-bento: 20px;
-  --spacing-inset: 40px;
-  --radius-tile: 20px;
 }
 
-@utility squircle {
-  corner-shape: squircle;
+@utility spread {
+  margin-inline: calc(var(--spacing-gutter) * -1);
+}
+
+@utility passage {
+  line-height: var(--leading-tight);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+@utility reference {
+  margin-top: 40px;
+  overflow: hidden;
+
+  & > cite {
+    display: block;
+    font-weight: 15;
+    letter-spacing: var(--tracking-widest);
+    font-style: normal;
+  }
+}
+
+@utility antiphon {
+  line-height: var(--leading-tight);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+@utility bento {
+  display: grid;
+  gap: 20px;
+
+  & > * {
+    padding: 40px;
+    border-radius: 30px;
+    corner-shape: squircle;
+  }
 }
 
 @layer base {
