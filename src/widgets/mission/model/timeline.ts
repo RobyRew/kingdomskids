@@ -4,8 +4,8 @@ import { ScrollTrigger as Trigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(Trigger);
 
 export function mission(root: HTMLElement) {
-  const tiles = [...root.querySelectorAll<HTMLElement>("[data-tile]")];
-  const [first] = tiles;
+  const cards = [...root.querySelectorAll<HTMLElement>("[data-card]")];
+  const [first] = cards;
   if (!first) return;
 
   gsap
@@ -13,6 +13,6 @@ export function mission(root: HTMLElement) {
       defaults: { ease: "power1.inOut", stagger: 0.15 },
       scrollTrigger: { trigger: first, start: "top 75%", once: true },
     })
-    .from(tiles, { y: 25, duration: 0.75 }, 0)
-    .from(tiles, { opacity: 0, duration: 1 }, 0);
+    .from(cards, { y: 25, duration: 0.75 }, 0)
+    .from(cards, { opacity: 0, duration: 1 }, 0);
 }

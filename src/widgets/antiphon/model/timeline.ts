@@ -9,7 +9,7 @@ export function antiphon(root: HTMLElement) {
 
   gsap
     .timeline({
-      defaults: { ease: "power1.inOut", stagger: 0.15 },
+      defaults: { ease: "power1.inOut" },
       scrollTrigger: { trigger: line, start: "top 75%", once: true },
     })
     .from(line, { y: 25, duration: 0.75 }, 0)

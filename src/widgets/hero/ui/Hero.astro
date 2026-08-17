@@ -2,23 +2,26 @@
 import Drawing from "@/widgets/hero/ui/jesus.svg";
 ---
 
-<section data-hero class="px-gutter grid">
-  <article class="spread bg-primary p-gutter">
+<section data-hero class="[container-type:inline-size] grid">
+  <article class="bg-primary pt-stanza">
     <div
       data-pin
       data-lock
-      class="p-gutter relative grid min-h-svh place-items-center"
+      class="relative grid min-h-[100svh] place-items-center"
     >
       <div
         aria-hidden="true"
         class="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden"
       >
-        <Drawing data-drawing class="text-secondary w-[min(100%,1500px)]" />
+        <Drawing
+          data-drawing
+          class="text-secondary max-w-measure w-[87.5cqw]"
+        />
       </div>
 
       <blockquote
         cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
-        class="relative max-w-[1000px]"
+        class="max-w-measure relative w-[87.5cqw]"
       >
         <p data-line class="passage text-[50px]">
           <span data-intro class="inline-block"

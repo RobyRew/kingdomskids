@@ -21,11 +21,12 @@
 }
 
 @theme {
-  --spacing-gutter: 15px;
+  --spacing-envoi: 40px;
+  --spacing-stanza: 120px;
 }
 
-@utility spread {
-  margin-inline: calc(var(--spacing-gutter) * -1);
+@theme {
+  --container-measure: 1260px;
 }
 
 @utility passage {
@@ -35,7 +36,7 @@
 }
 
 @utility reference {
-  margin-top: 40px;
+  margin-top: var(--spacing-envoi);
   overflow: hidden;
 
   & > cite {
@@ -50,17 +51,6 @@
   line-height: var(--leading-tight);
   font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-tight);
-}
-
-@utility bento {
-  display: grid;
-  gap: 20px;
-
-  & > * {
-    padding: 40px;
-    border-radius: 30px;
-    corner-shape: squircle;
-  }
 }
 
 @layer base {
