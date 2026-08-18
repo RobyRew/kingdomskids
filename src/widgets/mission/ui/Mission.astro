@@ -1,25 +1,41 @@
 ---
-import Carousel from "@/shared/ui/Carousel.astro";
+import Carousel from "@/shared/carousel/ui/Carousel.astro";
+import Dotnav from "@/shared/dotnav/ui/Dotnav.astro";
 ---
 
 <section data-mission class="pt-stanza bg-primary">
   <Carousel>
-    <li data-card class="bg-background grid place-items-center rounded-[30px]">
+    <li
+      data-card
+      data-rise
+      class="bg-background grid place-items-center rounded-[30px]"
+    >
     </li>
-    <li data-card class="bg-background grid place-items-center rounded-[30px]">
+    <li
+      data-card
+      data-rise
+      class="bg-background grid place-items-center rounded-[30px]"
+    >
     </li>
-    <li data-card class="bg-background grid place-items-center rounded-[30px]">
+    <li
+      data-card
+      data-rise
+      class="bg-background grid place-items-center rounded-[30px]"
+    >
     </li>
-    <li data-card class="bg-background grid place-items-center rounded-[30px]">
+    <li
+      data-card
+      data-rise
+      class="bg-background grid place-items-center rounded-[30px]"
+    >
     </li>
-    <li data-card class="bg-background grid place-items-center rounded-[30px]">
+    <li
+      data-card
+      data-rise
+      class="bg-background grid place-items-center rounded-[30px]"
+    >
     </li>
+
+    <Dotnav slot="control" />
   </Carousel>
 </section>
-
-<script>
-  import { mission } from "@/widgets/mission/model/timeline";
-
-  const root = document.querySelector<HTMLElement>("[data-mission]");
-  if (root) mission(root);
-</script>

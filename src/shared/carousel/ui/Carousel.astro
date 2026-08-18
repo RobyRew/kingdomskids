@@ -1,0 +1,30 @@
+<div
+  data-carousel
+  class="[&_li]:max-w-measure [container-type:inline-size] relative pb-[250px] [&_li]:min-h-[680px] [&_li]:w-[87.5cqw] [&_li]:[scroll-snap-align:center]"
+>
+  <div
+    data-track
+    class="-mb-[25px] [scroll-snap-type:x_mandatory] [scrollbar-width:none] overflow-x-scroll overflow-y-hidden pb-[25px]"
+  >
+    <ul
+      role="list"
+      class="mx-auto grid w-fit grid-flow-col gap-[20px] px-[max(6.25cqw,calc((100cqw_-_var(--container-measure))/2))]"
+    >
+      <slot />
+    </ul>
+  </div>
+
+  <div
+    data-control
+    class="pointer-events-none absolute inset-x-0 top-[70px] bottom-0 flex items-end justify-center overflow-clip"
+  >
+    <slot name="control" />
+  </div>
+</div>
+
+<script>
+  import { carousel } from "@/shared/carousel/model/timeline";
+
+  const roots = document.querySelectorAll<HTMLElement>("[data-carousel]");
+  roots.forEach((root) => carousel(root));
+</script>

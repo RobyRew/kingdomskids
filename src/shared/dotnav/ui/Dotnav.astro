@@ -1,0 +1,66 @@
+---
+import Pause from "@/shared/dotnav/ui/pause.svg";
+import Play from "@/shared/dotnav/ui/play.svg";
+import Rewind from "@/shared/dotnav/ui/rewind.svg";
+
+const pill =
+  "absolute top-0 left-0 h-[50px] w-[50px] rounded-[25px] bg-[color-mix(in_srgb,var(--color-secondary)_75%,var(--color-background))]";
+---
+
+<div data-dotnav class="pointer-events-auto mb-[100px] will-change-transform">
+  <div
+    data-lift
+    class="relative isolate flex items-center justify-center gap-[15px] opacity-0 will-change-transform"
+  >
+    <div
+      data-skins
+      class="pointer-events-none absolute inset-0 -z-10 [filter:url(#goo)]"
+    >
+      <div data-skin class={pill}></div>
+      <div data-skin class={pill}></div>
+    </div>
+
+    <div data-bubble class="flex h-[50px] items-center px-[15px]">
+      <div data-dots class="flex items-center gap-[20px]"></div>
+    </div>
+
+    <template data-blueprint>
+      <button
+        type="button"
+        class="bg-text/50 [&:hover:not([data-active])]:bg-text h-[10px] w-[10px] cursor-pointer overflow-hidden rounded-[5px] transition-[width,background-color] duration-[250ms] [&[data-active]]:w-[50px] [&[data-active]]:cursor-default"
+      >
+        <span
+          data-fill
+          class="bg-text hidden h-full w-[calc(var(--carousel-progress)*100%)] rounded-[5px] [[data-active]_&]:block"
+        ></span>
+      </button>
+    </template>
+
+    <button
+      data-toggle
+      type="button"
+      class="text-text grid h-[50px] w-[50px] cursor-pointer place-items-center"
+    >
+      <Pause class="hidden w-[20px] [[data-state=playing]_&]:block" />
+      <Play class="hidden w-[20px] [[data-state=paused]_&]:block" />
+      <Rewind class="hidden w-[20px] [[data-state=ended]_&]:block" />
+    </button>
+  </div>
+</div>
+
+<svg aria-hidden="true" class="absolute h-0 w-0">
+  <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"
+    ></feGaussianBlur>
+    <feColorMatrix
+      in="blur"
+      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"></feColorMatrix>
+  </filter>
+</svg>
+
+<script>
+  import { dotnav } from "@/shared/dotnav/model/timeline";
+
+  const navs = document.querySelectorAll<HTMLElement>("[data-dotnav]");
+  navs.forEach((nav) => dotnav(nav));
+</script>

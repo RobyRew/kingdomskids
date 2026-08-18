@@ -1,6 +1,6 @@
 ---
-import "@/shared/styles/global.css";
-import font from "@/shared/styles/sf.woff2?url";
+import "@/shared/styles/config/global.css";
+import font from "@/shared/styles/config/sf.woff2?url";
 
 interface Props {
   title: string;
@@ -27,7 +27,9 @@ const { title } = Astro.props;
 </html>
 
 <script>
-  import { scroll } from "@/shared/lib/scroll";
+  import { scroll } from "@/shared/scroll/lib/smoother";
+  import { reveal } from "@/shared/reveal/model/timeline";
 
   scroll();
+  reveal();
 </script>
