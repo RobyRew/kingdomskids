@@ -3,7 +3,7 @@ import Drawing from "@/widgets/hero/ui/jesus.svg";
 ---
 
 <section data-hero class="[container-type:inline-size] grid">
-  <article class="bg-primary pt-stanza">
+  <article class="bg-background pt-[120px]">
     <div
       data-pin
       data-lock
@@ -15,15 +15,18 @@ import Drawing from "@/widgets/hero/ui/jesus.svg";
       >
         <Drawing
           data-drawing
-          class="text-secondary max-w-measure w-[87.5cqw]"
+          class="text-secondary w-[87.5cqw] max-w-[1260px]"
         />
       </div>
 
       <blockquote
         cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
-        class="max-w-measure relative w-[87.5cqw]"
+        class="relative w-[87.5cqw] max-w-[1260px]"
       >
-        <p data-line class="passage text-[50px]">
+        <p
+          data-line
+          class="text-[50px] leading-tight font-semibold tracking-tight"
+        >
           <span data-intro class="inline-block"
             ><span class="text-accent">Jesus</span> said</span
           ><span data-verse
@@ -32,8 +35,12 @@ import Drawing from "@/widgets/hero/ui/jesus.svg";
             name of the Father and of the Son and of the Holy Spirit."</span
           >
         </p>
-        <div class="reference">
-          <cite data-reference class="text-[15px]">MATTHEW 28:19</cite>
+        <div class="mt-[40px] overflow-hidden">
+          <cite
+            data-reference
+            class="block text-[15px] font-[15] tracking-widest not-italic"
+            >MATTHEW 28:19</cite
+          >
         </div>
       </blockquote>
     </div>

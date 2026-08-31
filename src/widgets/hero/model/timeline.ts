@@ -36,8 +36,6 @@ function settle(words: Element[]) {
   return gsap.set(words, { opacity: 1, filter: "blur(0px)" });
 }
 
-// power2.out where the other reveals use power1.inOut: this tween resolves a
-// blur rather than travel, and the long tail is where the focus lands.
 function fade(words: Element[], done: () => void) {
   return gsap.fromTo(
     words,

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@/shared/carousel/ui/style.css";
+@import "@/shared/dotnav/ui/style.css";
 
 @font-face {
   font-family: "SF Pro";
@@ -18,95 +20,6 @@
   --color-primary: rgb(245, 245, 250);
   --color-secondary: rgb(210, 210, 215);
   --color-accent: rgb(255, 135, 50);
-}
-
-@theme {
-  --spacing-envoi: 40px;
-  --spacing-stanza: 120px;
-}
-
-@theme {
-  --container-measure: 1260px;
-}
-
-@utility passage {
-  line-height: var(--leading-tight);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--tracking-tight);
-}
-
-@utility reference {
-  margin-top: var(--spacing-envoi);
-  overflow: hidden;
-
-  & > cite {
-    display: block;
-    font-weight: 15;
-    letter-spacing: var(--tracking-widest);
-    font-style: normal;
-  }
-}
-
-@property --autoplay-progress {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-@property --progress-intro {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --alpha {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-@property --item-index {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 0;
-}
-
-@property --scale {
-  syntax: "<number>";
-  inherits: false;
-  initial-value: 1;
-}
-
-@utility material {
-  background-color: color-mix(
-    in srgb,
-    color-mix(in srgb, var(--color-secondary) 35%, var(--color-primary))
-      calc(100% - var(--alpha, 0) * 30%),
-    transparent
-  );
-  backdrop-filter: blur(calc(6.25px * (2 - var(--alpha, 0))));
-  -webkit-backdrop-filter: blur(calc(6.25px * (2 - var(--alpha, 0))));
-}
-
-@utility bead {
-  --span: calc(var(--item-index, 0) - var(--autoplay-progress, 0));
-  --reach: max(var(--span), -1 * var(--span));
-  --swell: max(min(1 - var(--reach), 1), 0);
-
-  width: 7.5px;
-  height: 7.5px;
-  min-width: calc(37.5px * var(--swell) * var(--progress-intro, 1) + 7.5px);
-  max-width: 45px;
-  border-radius: 5px;
-}
-
-@keyframes dwell {
-  from {
-    width: 0;
-  }
-  to {
-    width: 115%;
-  }
 }
 
 @layer base {

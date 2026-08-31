@@ -161,6 +161,14 @@ function listen(parts: Parts, beat: gsap.core.Tween) {
   root.addEventListener("carousel:ready", () => arm(parts, beat));
 }
 
+function tap(parts: Parts, beat: gsap.core.Tween) {
+  parts.cards.forEach((card, index) =>
+    card.addEventListener("click", () => {
+      if (index !== spot(parts)) jump(parts, beat, index);
+    }),
+  );
+}
+
 function live(root: HTMLElement) {
   return root.hasAttribute(ready) && root.getAttribute(mode) === playing;
 }
@@ -229,6 +237,7 @@ export function carousel(root: HTMLElement) {
   const beat = clock(parts);
 
   listen(parts, beat);
+  tap(parts, beat);
   watch(parts, beat);
   mirror(parts, beat);
   trail(root);

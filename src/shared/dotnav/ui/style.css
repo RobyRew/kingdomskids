@@ -1,0 +1,32 @@
+@property --alpha {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --progress-intro {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --item-index {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --scale {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+@keyframes dwell {
+  from {
+    width: 0;
+  }
+  to {
+    width: 115%;
+  }
+}

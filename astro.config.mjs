@@ -5,7 +5,10 @@ export default defineConfig({
   experimental: {
     svgOptimizer: svgoOptimizer({
       plugins: [
-        { name: "preset-default", params: { overrides: { mergePaths: false } } },
+        {
+          name: "preset-default",
+          params: { overrides: { mergePaths: false } },
+        },
       ],
     }),
   },

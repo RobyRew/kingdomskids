@@ -2,8 +2,10 @@
 import Pause from "@/shared/dotnav/ui/pause.svg";
 import Play from "@/shared/dotnav/ui/play.svg";
 
-const skin =
-  "material absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] rounded-[25px] [transform:translate(-50%,-50%)_scale(var(--scale,1))]";
+const material =
+  "bg-[color-mix(in_srgb,color-mix(in_srgb,var(--color-secondary)_35%,var(--color-primary))_calc(100%_-_var(--alpha,0)_*_30%),transparent)] backdrop-blur-[calc(6.25px_*_(2_-_var(--alpha,0)))] [-webkit-backdrop-filter:blur(calc(6.25px_*_(2_-_var(--alpha,0))))]";
+
+const skin = `${material} absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] rounded-[25px] [transform:translate(-50%,-50%)_scale(var(--scale,1))]`;
 ---
 
 <div data-dotnav class="pointer-events-auto mb-[100px] will-change-transform">
@@ -13,7 +15,7 @@ const skin =
   >
     <div
       data-seed
-      class="material absolute top-1/2 left-1/2 h-[70px] w-[25px] rounded-[25px] opacity-0 [--alpha:0]"
+      class={`${material} absolute top-1/2 left-1/2 h-[70px] w-[25px] rounded-[25px] opacity-0 [--alpha:0]`}
     >
     </div>
 
@@ -30,7 +32,7 @@ const skin =
       <button
         data-toggle
         type="button"
-        class="text-text/50 hover:text-text focus-visible:outline-accent grid h-full w-full cursor-pointer place-items-center rounded-[25px] transition-[color] duration-[250ms] focus-visible:outline-2 focus-visible:outline-offset-[3px]"
+        class="text-text/50 hover:bg-text/5 hover:text-text focus-visible:outline-accent grid h-full w-full cursor-pointer place-items-center rounded-[25px] transition-[color,background-color] duration-[250ms] focus-visible:outline-2 focus-visible:outline-offset-[3px]"
       >
         <Pause class="hidden w-[20px] [[data-state=playing]_&]:block" />
         <Play
@@ -42,7 +44,7 @@ const skin =
     <template data-blueprint>
       <button
         type="button"
-        class="bead bg-text/50 [&:hover:not([data-active])]:bg-text focus-visible:outline-accent relative cursor-pointer overflow-hidden transition-[background-color] duration-[250ms] before:absolute before:-inset-[7.5px] before:content-[''] focus-visible:outline-2 focus-visible:outline-offset-[3px] [&[data-active]]:pointer-events-none [&[data-active]]:cursor-default"
+        class="bg-text/50 [&:hover:not([data-active])]:bg-text focus-visible:outline-accent relative h-[7.5px] w-[7.5px] max-w-[45px] min-w-[calc(37.5px_*_var(--swell)_*_var(--progress-intro,1)_+_7.5px)] cursor-pointer overflow-hidden rounded-[5px] transition-[background-color] duration-[250ms] [--reach:max(var(--span),-1_*_var(--span))] [--span:calc(var(--item-index,0)_-_var(--autoplay-progress,0))] [--swell:max(min(1_-_var(--reach),1),0)] before:absolute before:-inset-[7.5px] before:content-[''] focus-visible:outline-2 focus-visible:outline-offset-[3px] [&[data-active]]:pointer-events-none [&[data-active]]:cursor-default"
       >
         <span
           data-fill
