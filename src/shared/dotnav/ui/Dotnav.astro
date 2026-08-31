@@ -1,62 +1,57 @@
 ---
 import Pause from "@/shared/dotnav/ui/pause.svg";
 import Play from "@/shared/dotnav/ui/play.svg";
-import Rewind from "@/shared/dotnav/ui/rewind.svg";
 
-const pill =
-  "absolute top-0 left-0 h-[50px] w-[50px] rounded-[25px] bg-[color-mix(in_srgb,var(--color-secondary)_75%,var(--color-background))]";
+const skin =
+  "material absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] rounded-[25px] [transform:translate(-50%,-50%)_scale(var(--scale,1))]";
 ---
 
 <div data-dotnav class="pointer-events-auto mb-[100px] will-change-transform">
   <div
     data-lift
-    class="relative isolate flex items-center justify-center gap-[15px] opacity-0 will-change-transform"
+    class="relative isolate flex items-center justify-center gap-[15px] will-change-transform"
   >
     <div
-      data-skins
-      class="pointer-events-none absolute inset-0 -z-10 [filter:url(#goo)]"
+      data-seed
+      class="material absolute top-1/2 left-1/2 h-[70px] w-[25px] rounded-[25px] opacity-0 [--alpha:0]"
     >
-      <div data-skin class={pill}></div>
-      <div data-skin class={pill}></div>
     </div>
 
-    <div data-bubble class="flex h-[50px] items-center px-[15px]">
-      <div data-dots class="flex items-center gap-[20px]"></div>
+    <div
+      data-bubble
+      class="relative flex h-[50px] items-center px-[20px] opacity-0 [--alpha:0]"
+    >
+      <span data-skin class={skin}></span>
+      <div data-dots class="flex items-center gap-[15px]"></div>
+    </div>
+
+    <div data-bubble class="relative h-[50px] w-[50px] opacity-0 [--alpha:0]">
+      <span data-skin class={skin}></span>
+      <button
+        data-toggle
+        type="button"
+        class="text-text/50 hover:text-text focus-visible:outline-accent grid h-full w-full cursor-pointer place-items-center rounded-[25px] transition-[color] duration-[250ms] focus-visible:outline-2 focus-visible:outline-offset-[3px]"
+      >
+        <Pause class="hidden w-[20px] [[data-state=playing]_&]:block" />
+        <Play
+          class="hidden w-[20px] [[data-state=ended]_&]:block [[data-state=paused]_&]:block"
+        />
+      </button>
     </div>
 
     <template data-blueprint>
       <button
         type="button"
-        class="bg-text/50 [&:hover:not([data-active])]:bg-text h-[10px] w-[10px] cursor-pointer overflow-hidden rounded-[5px] transition-[width,background-color] duration-[250ms] [&[data-active]]:w-[50px] [&[data-active]]:cursor-default"
+        class="bead bg-text/50 [&:hover:not([data-active])]:bg-text focus-visible:outline-accent relative cursor-pointer overflow-hidden transition-[background-color] duration-[250ms] before:absolute before:-inset-[7.5px] before:content-[''] focus-visible:outline-2 focus-visible:outline-offset-[3px] [&[data-active]]:pointer-events-none [&[data-active]]:cursor-default"
       >
         <span
           data-fill
-          class="bg-text hidden h-full w-[calc(var(--carousel-progress)*100%)] rounded-[5px] [[data-active]_&]:block"
+          class="bg-text absolute top-0 left-0 -ml-[15%] hidden h-full w-0 min-w-[15%] rounded-[5px] [[data-active]_&]:block [[data-active]_&]:[animation:dwell_var(--dwell)_linear_forwards] [[data-beat=paused]_[data-active]_&]:[animation-play-state:paused]"
         ></span>
       </button>
     </template>
-
-    <button
-      data-toggle
-      type="button"
-      class="text-text grid h-[50px] w-[50px] cursor-pointer place-items-center"
-    >
-      <Pause class="hidden w-[20px] [[data-state=playing]_&]:block" />
-      <Play class="hidden w-[20px] [[data-state=paused]_&]:block" />
-      <Rewind class="hidden w-[20px] [[data-state=ended]_&]:block" />
-    </button>
   </div>
 </div>
-
-<svg aria-hidden="true" class="absolute h-0 w-0">
-  <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
-    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"
-    ></feGaussianBlur>
-    <feColorMatrix
-      in="blur"
-      values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"></feColorMatrix>
-  </filter>
-</svg>
 
 <script>
   import { dotnav } from "@/shared/dotnav/model/timeline";

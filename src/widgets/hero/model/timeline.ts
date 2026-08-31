@@ -32,26 +32,39 @@ function centre({ line, intro }: Parts) {
   gsap.set(intro, { x: (line.clientWidth - intro.offsetWidth) / 2 });
 }
 
+function settle(words: Element[]) {
+  return gsap.set(words, { opacity: 1, filter: "blur(0px)" });
+}
+
 // power2.out where the other reveals use power1.inOut: this tween resolves a
 // blur rather than travel, and the long tail is where the focus lands.
+function fade(words: Element[], done: () => void) {
+  return gsap.fromTo(
+    words,
+    { opacity: 0, filter: "blur(10px)" },
+    {
+      opacity: 1,
+      filter: "blur(0px)",
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.25,
+      onComplete: done,
+    },
+  );
+}
+
 function greet({ intro }: Parts) {
+  let shown = false;
+  const done = () => {
+    shown = true;
+    Smoother.get()?.paused(false);
+  };
+
   return Text.create(intro, {
     type: "words",
     aria: "auto",
     autoSplit: true,
-    onSplit: (self) =>
-      gsap.fromTo(
-        self.words,
-        { opacity: 0, filter: "blur(10px)" },
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1,
-          ease: "power2.out",
-          stagger: 0.25,
-          onComplete: () => Smoother.get()?.paused(false),
-        },
-      ),
+    onSplit: (self) => (shown ? settle(self.words) : fade(self.words, done)),
   });
 }
 

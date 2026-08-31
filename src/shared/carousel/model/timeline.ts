@@ -7,22 +7,26 @@ declare global {
   interface HTMLElementEventMap {
     "carousel:go": CustomEvent<number>;
     "carousel:toggle": CustomEvent;
+    "carousel:ready": CustomEvent;
   }
 }
 
-const dwell = 6.15;
+const dwell = 6.25;
 const lift = 30;
 const perch = 100;
 const mode = "data-state";
 const playing = "playing";
 const paused = "paused";
 const ended = "ended";
+const ready = "data-ready";
+
+type Slide = (value: number) => void;
 
 interface Parts {
   root: HTMLElement;
   track: HTMLElement;
   cards: HTMLElement[];
-  step: number;
+  gap: () => number;
 }
 
 function collect(root: HTMLElement): Parts | undefined {
@@ -31,18 +35,32 @@ function collect(root: HTMLElement): Parts | undefined {
   const [first, second] = cards;
 
   if (!track || !first || !second) return undefined;
-  return { root, track, cards, step: second.offsetLeft - first.offsetLeft };
+  return { root, track, cards, gap: gauge(cards) };
 }
 
-function spot({ track, step }: Parts) {
-  return Math.round(track.scrollLeft / step);
+function gauge(cards: HTMLElement[]) {
+  let span = 0;
+  const take = () => {
+    const [first, second] = cards;
+    span = first && second ? second.offsetLeft - first.offsetLeft : 0;
+  };
+
+  take();
+  Trigger.addEventListener("refreshInit", take);
+  return () => span;
 }
 
-function tick(root: HTMLElement, progress: number) {
-  root.style.setProperty("--carousel-progress", String(progress));
+function spot(parts: Parts) {
+  const gap = parts.gap();
+  if (gap <= 0) return 0;
+  return Math.round(parts.track.scrollLeft / gap);
 }
 
-function land({ root, track, cards }: Parts, dest: number) {
+function pulse(root: HTMLElement, beat: gsap.core.Tween) {
+  root.setAttribute("data-beat", beat.paused() ? paused : playing);
+}
+
+function land({ track, cards }: Parts, dest: number) {
   const card = cards[dest];
   if (!card) return;
 
@@ -52,7 +70,26 @@ function land({ root, track, cards }: Parts, dest: number) {
   const left = track.scrollLeft + box.left - frame.left - slack;
 
   track.scrollTo({ left, behavior: "smooth" });
-  root.setAttribute("data-current", String(dest));
+}
+
+function mirror(parts: Parts, beat: gsap.core.Tween) {
+  const sync = () => {
+    const gap = parts.gap();
+    const where = gap > 0 ? parts.track.scrollLeft / gap : 0;
+    const near = String(Math.round(where));
+    const was = parts.root.getAttribute("data-current");
+
+    parts.root.style.setProperty("--autoplay-progress", String(where));
+    if (was === near) return;
+
+    parts.root.setAttribute("data-current", near);
+    if (was === null || !live(parts.root)) return;
+    beat.restart();
+    pulse(parts.root, beat);
+  };
+
+  parts.track.addEventListener("scroll", sync, { passive: true });
+  sync();
 }
 
 function next(parts: Parts, beat: gsap.core.Tween) {
@@ -60,11 +97,12 @@ function next(parts: Parts, beat: gsap.core.Tween) {
 
   if (dest >= parts.cards.length) {
     parts.root.setAttribute(mode, ended);
+    beat.pause();
+    pulse(parts.root, beat);
     return;
   }
 
   land(parts, dest);
-  beat.restart();
 }
 
 function clock(parts: Parts) {
@@ -75,7 +113,6 @@ function clock(parts: Parts) {
     duration: dwell,
     ease: "none",
     paused: true,
-    onUpdate: () => tick(parts.root, counter.pass),
     onComplete: () => next(parts, beat),
   });
 
@@ -85,24 +122,33 @@ function clock(parts: Parts) {
 function jump(parts: Parts, beat: gsap.core.Tween, dest: number) {
   land(parts, dest);
   parts.root.setAttribute(mode, playing);
-  beat.restart();
+  pulse(parts.root, beat);
+}
+
+function hush(parts: Parts, beat: gsap.core.Tween) {
+  parts.root.setAttribute(mode, paused);
+  beat.pause();
+  pulse(parts.root, beat);
+}
+
+function carry(parts: Parts, beat: gsap.core.Tween) {
+  parts.root.setAttribute(mode, playing);
+  beat.play();
+  pulse(parts.root, beat);
 }
 
 function toggle(parts: Parts, beat: gsap.core.Tween) {
   const now = parts.root.getAttribute(mode);
 
-  if (now === ended) {
-    jump(parts, beat, 0);
-    return;
-  }
-  if (now === playing) {
-    parts.root.setAttribute(mode, paused);
-    beat.pause();
-    return;
-  }
+  if (now === ended) return jump(parts, beat, 0);
+  if (now === playing) return hush(parts, beat);
+  return carry(parts, beat);
+}
 
-  parts.root.setAttribute(mode, playing);
-  beat.play();
+function arm(parts: Parts, beat: gsap.core.Tween) {
+  parts.root.setAttribute(ready, "");
+  if (parts.root.getAttribute(mode) === playing) beat.restart();
+  pulse(parts.root, beat);
 }
 
 function listen(parts: Parts, beat: gsap.core.Tween) {
@@ -112,13 +158,22 @@ function listen(parts: Parts, beat: gsap.core.Tween) {
     jump(parts, beat, event.detail),
   );
   root.addEventListener("carousel:toggle", () => toggle(parts, beat));
+  root.addEventListener("carousel:ready", () => arm(parts, beat));
+}
+
+function live(root: HTMLElement) {
+  return root.hasAttribute(ready) && root.getAttribute(mode) === playing;
 }
 
 function watch(parts: Parts, beat: gsap.core.Tween) {
   const wake = () => {
-    if (parts.root.getAttribute(mode) === playing) beat.play();
+    if (live(parts.root)) beat.play();
+    pulse(parts.root, beat);
   };
-  const halt = () => beat.pause();
+  const halt = () => {
+    beat.pause();
+    pulse(parts.root, beat);
+  };
 
   const view = Trigger.create({
     trigger: parts.root,
@@ -133,14 +188,14 @@ function watch(parts: Parts, beat: gsap.core.Tween) {
   if (view.isActive) wake();
 }
 
-function drift(nav: HTMLElement, box: HTMLElement) {
+function drift(nav: HTMLElement, box: HTMLElement, slide: Slide) {
   const frame = box.getBoundingClientRect();
   const tall = nav.offsetHeight;
   const home = frame.bottom - perch - tall;
   const reach = home - frame.top - lift;
   const want = window.innerHeight - lift - tall - home;
 
-  gsap.set(nav, { y: gsap.utils.clamp(-reach, 0, want) });
+  slide(gsap.utils.clamp(-reach, 0, want));
 }
 
 function trail(root: HTMLElement) {
@@ -148,7 +203,8 @@ function trail(root: HTMLElement) {
   const nav = box?.firstElementChild;
   if (!box || !(nav instanceof HTMLElement)) return;
 
-  const move = () => drift(nav, box);
+  const slide = gsap.quickSetter(nav, "y", "px") as Slide;
+  const move = () => drift(nav, box, slide);
 
   Trigger.create({
     trigger: root,
@@ -159,6 +215,13 @@ function trail(root: HTMLElement) {
   });
 }
 
+function prime(parts: Parts, beat: gsap.core.Tween) {
+  parts.root.style.setProperty("--dwell", `${dwell}s`);
+  parts.root.setAttribute(mode, playing);
+  if (!parts.root.querySelector("[data-dotnav]")) arm(parts, beat);
+  pulse(parts.root, beat);
+}
+
 export function carousel(root: HTMLElement) {
   const parts = collect(root);
   if (!parts) return;
@@ -167,8 +230,7 @@ export function carousel(root: HTMLElement) {
 
   listen(parts, beat);
   watch(parts, beat);
+  mirror(parts, beat);
   trail(root);
-  tick(root, 0);
-  root.setAttribute("data-current", "0");
-  root.setAttribute(mode, playing);
+  prime(parts, beat);
 }

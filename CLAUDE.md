@@ -24,13 +24,14 @@ restate the numbers anywhere else** — the config is the single source of truth
 Run `npm run lint` to see them.
 
 They are Uncle Bob's, not defaults: functions ≤20 lines, indent depth ≤2,
-≤3 parameters, files ≤200 lines, no magic numbers, no flag arguments.
+≤3 parameters, files ≤200 lines, no flag arguments.
 
 ## Stack
 
 - **Astro 7** — no React in phase 1. Add islands only when something needs state.
 - **TypeScript 5.x** — **YOU MUST NOT upgrade to 7.** `@astrojs/check` peer-requires `^5 || ^6`.
-- **GSAP** — ScrollTrigger, ScrollSmoother, SplitText. All free since Webflow.
+- **GSAP** — ScrollTrigger, ScrollSmoother, SplitText, DrawSVG. All free since
+  Webflow.
 - **Tailwind 4** via `@tailwindcss/vite`. There is no `postcss.config`.
 - **Prettier** owns all formatting. Never hand-format.
 
@@ -66,10 +67,10 @@ own `pages` name, which Astro has taken. Do not create them before then.
 - Data attributes are behaviour hooks; classes are for styling. Never query
   JavaScript by class name.
 - Colour tokens are `text`, `background`, `primary`, `secondary`, `accent`.
-  Nothing else. Defined in `src/shared/styles/global.css`.
-- The font is a subset of SF Pro at `public/fonts/sf.woff2` — 277 glyphs
-  covering English, Romanian and Spanish, weight axis 1–1000, width pinned.
-  Regenerating it means re-subsetting, not swapping the file.
+  Nothing else. Defined in `src/shared/styles/config/global.css`.
+- The font is a subset of SF Pro at `src/shared/styles/config/sf.woff2` — 277
+  glyphs covering English, Romanian and Spanish, weight axis 1–1000, width
+  pinned. Regenerating it means re-subsetting, not swapping the file.
 
 ## Traps already paid for
 

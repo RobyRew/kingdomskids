@@ -1,63 +1,40 @@
 import gsap from "gsap";
 import { ScrollTrigger as Trigger } from "gsap/ScrollTrigger";
+import { bloom } from "@/shared/dotnav/model/intro";
+import type { Bubble, Parts } from "@/shared/dotnav/model/intro";
 
 gsap.registerPlugin(Trigger);
 
-const rise = 400;
-const bead = 50;
-const swell = "power2.out";
-
-function spring(stiffness: number, damping: number) {
-  const freq = Math.sqrt(stiffness);
-  const zeta = damping / (2 * freq);
-  const decay = zeta * freq;
-
-  if (zeta >= 1) {
-    return (ratio: number) =>
-      1 - Math.exp(-decay * ratio) * (1 + decay * ratio);
-  }
-
-  const wave = freq * Math.sqrt(1 - zeta * zeta);
-  return (ratio: number) =>
-    1 -
-    Math.exp(-decay * ratio) *
-      (Math.cos(wave * ratio) + (decay / wave) * Math.sin(wave * ratio));
+function frame(nav: HTMLElement) {
+  return {
+    lift: nav.querySelector<HTMLElement>("[data-lift]"),
+    seed: nav.querySelector<HTMLElement>("[data-seed]"),
+    box: nav.querySelector<HTMLElement>("[data-dots]"),
+    blueprint: nav.querySelector<HTMLTemplateElement>("[data-blueprint]"),
+    toggle: nav.querySelector<HTMLElement>("[data-toggle]"),
+  };
 }
 
-const bouncy = spring(100, 10);
-const quick = spring(200, 20);
+function pair(nav: HTMLElement) {
+  const bubbles: Bubble[] = [];
 
-interface Parts {
-  lift: HTMLElement;
-  carousel: HTMLElement;
-  box: HTMLElement;
-  blueprint: HTMLTemplateElement;
-}
+  nav.querySelectorAll<HTMLElement>("[data-bubble]").forEach((element) => {
+    const skin = element.querySelector<HTMLElement>("[data-skin]");
+    if (skin) bubbles.push({ element, skin });
+  });
 
-interface Stage {
-  bubble: HTMLElement;
-  toggle: HTMLElement;
-  stem: HTMLElement;
-  disc: HTMLElement;
+  return bubbles;
 }
 
 function collect(nav: HTMLElement): Parts | undefined {
   const carousel = nav.closest<HTMLElement>("[data-carousel]");
-  const lift = nav.querySelector<HTMLElement>("[data-lift]");
-  const box = nav.querySelector<HTMLElement>("[data-dots]");
-  const blueprint = nav.querySelector<HTMLTemplateElement>("[data-blueprint]");
+  const { lift, seed, box, blueprint, toggle } = frame(nav);
+  const bubbles = pair(nav);
 
-  if (!carousel || !lift || !box || !blueprint) return undefined;
-  return { lift, carousel, box, blueprint };
-}
-
-function staging(nav: HTMLElement): Stage | undefined {
-  const bubble = nav.querySelector<HTMLElement>("[data-bubble]");
-  const toggle = nav.querySelector<HTMLElement>("[data-toggle]");
-  const [stem, disc] = [...nav.querySelectorAll<HTMLElement>("[data-skin]")];
-
-  if (!bubble || !toggle || !stem || !disc) return undefined;
-  return { bubble, toggle, stem, disc };
+  if (!carousel || !lift || !seed) return undefined;
+  if (!box || !blueprint || !toggle) return undefined;
+  if (bubbles.length < 2) return undefined;
+  return { lift, seed, carousel, box, blueprint, toggle, bubbles };
 }
 
 function send(carousel: HTMLElement, name: string, detail: number) {
@@ -69,6 +46,7 @@ function mint({ carousel, blueprint }: Parts, index: number) {
   if (!(dot instanceof HTMLButtonElement)) return undefined;
 
   dot.setAttribute("data-dot", String(index));
+  dot.style.setProperty("--item-index", String(index));
   dot.addEventListener("click", () => send(carousel, "carousel:go", index));
   return dot;
 }
@@ -100,73 +78,10 @@ function follow(parts: Parts, dots: HTMLButtonElement[]) {
   });
 }
 
-function shape(parts: Parts, stage: Stage) {
-  return {
-    wide: stage.bubble.offsetWidth,
-    spot: stage.toggle.offsetLeft,
-    mid: (parts.lift.offsetWidth - bead) / 2,
-  };
-}
-
-function curtain(stage: Stage, dots: HTMLButtonElement[], mid: number) {
-  gsap.set([stage.stem, stage.disc], { x: mid, width: bead });
-  gsap.set(stage.stem, { scale: 1.3 });
-  gsap.set(stage.disc, { scale: 0 });
-  gsap.set([dots, stage.toggle.querySelectorAll("svg")], { opacity: 0 });
-}
-
-function spread(parts: Parts, dots: HTMLButtonElement[]) {
-  const heart = parts.box.offsetLeft + parts.box.offsetWidth / 2;
-
-  return dots.map((dot) => heart - dot.offsetLeft - dot.offsetWidth / 2);
-}
-
-function arrive(stage: Stage, dots: HTMLButtonElement[], nudge: number[]) {
-  const marks = stage.toggle.querySelectorAll("svg");
-  const land = {
-    x: 0,
-    opacity: 1,
-    duration: 0.55,
-    ease: quick,
-    stagger: 0.035,
-  };
-
-  return gsap
-    .timeline()
-    .fromTo(dots, { x: (index: number) => nudge[index] ?? 0 }, land, 0)
-    .to(marks, { opacity: 1, duration: 0.24, ease: swell }, 0.08);
-}
-
-function flight(parts: Parts, stage: Stage, size: ReturnType<typeof shape>) {
-  return gsap
-    .timeline({ paused: true })
-    .set(parts.lift, { opacity: 1, immediateRender: false }, 0)
-    .from(parts.lift, { y: rise, duration: 1.6, ease: bouncy }, 0)
-    .to(stage.stem, { scale: 1, duration: 0.24, ease: swell }, 0.5)
-    .to(
-      stage.stem,
-      { x: 0, width: size.wide, duration: 0.43, ease: swell },
-      0.5,
-    )
-    .to(stage.disc, { scale: 1, duration: 0.35, ease: swell }, 0.5)
-    .to(stage.disc, { x: size.spot, duration: 0.43, ease: swell }, 0.5);
-}
-
-function bloom(parts: Parts, stage: Stage, dots: HTMLButtonElement[]) {
-  const size = shape(parts, stage);
-  const nudge = spread(parts, dots);
-
-  curtain(stage, dots, size.mid);
-  const show = flight(parts, stage, size);
-
-  show.add(arrive(stage, dots, nudge), 0.78);
-  return show;
-}
-
 function wake(parts: Parts, show: gsap.core.Timeline) {
   Trigger.create({
     trigger: parts.carousel,
-    start: "top 33%",
+    start: "top 35%",
     once: true,
     onEnter: () => show.play(),
   });
@@ -174,16 +89,15 @@ function wake(parts: Parts, show: gsap.core.Timeline) {
 
 export function dotnav(nav: HTMLElement) {
   const parts = collect(nav);
-  const stage = staging(nav);
-  if (!parts || !stage) return;
+  if (!parts) return;
 
   const dots = build(parts);
 
-  stage.toggle.addEventListener("click", () =>
+  parts.toggle.addEventListener("click", () =>
     parts.carousel.dispatchEvent(new CustomEvent("carousel:toggle")),
   );
 
   mark(dots, parts.carousel);
   follow(parts, dots);
-  wake(parts, bloom(parts, stage, dots));
+  wake(parts, bloom(parts, dots));
 }
