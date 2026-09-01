@@ -1,7 +1,8 @@
 import gsap from "gsap";
 import { ScrollTrigger as Trigger } from "gsap/ScrollTrigger";
+import { CustomEase as Ease } from "gsap/CustomEase";
 
-gsap.registerPlugin(Trigger);
+gsap.registerPlugin(Trigger, Ease);
 
 declare global {
   interface HTMLElementEventMap {
@@ -11,7 +12,10 @@ declare global {
   }
 }
 
-const dwell = 6.25;
+const dwell = 6.15;
+const offset = 0.15;
+const sweep = 1;
+const glide = Ease.create("glide", "M0,0 C0,0 0.60,1 1,1");
 const lift = 30;
 const perch = 100;
 const mode = "data-state";
@@ -60,16 +64,45 @@ function pulse(root: HTMLElement, beat: gsap.core.Tween) {
   root.setAttribute("data-beat", beat.paused() ? paused : playing);
 }
 
-function land({ track, cards }: Parts, dest: number) {
-  const card = cards[dest];
-  if (!card) return;
-
+function target(track: HTMLElement, card: HTMLElement) {
   const frame = track.getBoundingClientRect();
   const box = card.getBoundingClientRect();
   const slack = (frame.width - box.width) / 2;
-  const left = track.scrollLeft + box.left - frame.left - slack;
 
-  track.scrollTo({ left, behavior: "smooth" });
+  return track.scrollLeft + box.left - frame.left - slack;
+}
+
+function loosen(track: HTMLElement) {
+  track.style.setProperty("scroll-snap-type", "none");
+}
+
+function tighten(track: HTMLElement) {
+  track.style.removeProperty("scroll-snap-type");
+}
+
+function renew(parts: Parts, beat: gsap.core.Tween) {
+  if (!live(parts.root)) return;
+  beat.restart();
+  pulse(parts.root, beat);
+}
+
+function land(parts: Parts, beat: gsap.core.Tween, dest: number) {
+  const card = parts.cards[dest];
+  if (!card) return;
+
+  gsap.killTweensOf(parts.track);
+  gsap.to(parts.track, {
+    scrollLeft: target(parts.track, card),
+    duration: sweep,
+    ease: glide,
+    onStart: () => loosen(parts.track),
+    onComplete: () => tighten(parts.track),
+  });
+  gsap.delayedCall(sweep - offset, () => renew(parts, beat));
+}
+
+function idle(parts: Parts) {
+  return live(parts.root) && !gsap.isTweening(parts.track);
 }
 
 function mirror(parts: Parts, beat: gsap.core.Tween) {
@@ -83,7 +116,7 @@ function mirror(parts: Parts, beat: gsap.core.Tween) {
     if (was === near) return;
 
     parts.root.setAttribute("data-current", near);
-    if (was === null || !live(parts.root)) return;
+    if (was === null || !idle(parts)) return;
     beat.restart();
     pulse(parts.root, beat);
   };
@@ -102,7 +135,7 @@ function next(parts: Parts, beat: gsap.core.Tween) {
     return;
   }
 
-  land(parts, dest);
+  land(parts, beat, dest);
 }
 
 function clock(parts: Parts) {
@@ -120,7 +153,7 @@ function clock(parts: Parts) {
 }
 
 function jump(parts: Parts, beat: gsap.core.Tween, dest: number) {
-  land(parts, dest);
+  land(parts, beat, dest);
   parts.root.setAttribute(mode, playing);
   pulse(parts.root, beat);
 }
@@ -224,7 +257,7 @@ function trail(root: HTMLElement) {
 }
 
 function prime(parts: Parts, beat: gsap.core.Tween) {
-  parts.root.style.setProperty("--dwell", `${dwell}s`);
+  parts.root.style.setProperty("--dwell", `${dwell + offset}s`);
   parts.root.setAttribute(mode, playing);
   if (!parts.root.querySelector("[data-dotnav]")) arm(parts, beat);
   pulse(parts.root, beat);

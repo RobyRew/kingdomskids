@@ -32,10 +32,15 @@ const skin = `${material} absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] roun
       <button
         data-toggle
         type="button"
-        class="text-text/50 hover:bg-text/5 hover:text-text focus-visible:outline-accent grid h-full w-full cursor-pointer place-items-center rounded-[25px] transition-[color,background-color] duration-[250ms] focus-visible:outline-2 focus-visible:outline-offset-[3px]"
+        aria-label="Toggle autoplay"
+        class="text-text/50 hover:bg-text/5 hover:text-text grid h-full w-full cursor-pointer place-items-center rounded-[25px] transition-[color,background-color] duration-[250ms]"
       >
-        <Pause class="hidden w-[20px] [[data-state=playing]_&]:block" />
+        <Pause
+          aria-hidden="true"
+          class="hidden w-[20px] [[data-state=playing]_&]:block"
+        />
         <Play
+          aria-hidden="true"
           class="hidden w-[20px] [[data-state=ended]_&]:block [[data-state=paused]_&]:block"
         />
       </button>
@@ -44,7 +49,7 @@ const skin = `${material} absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] roun
     <template data-blueprint>
       <button
         type="button"
-        class="bg-text/50 [&:hover:not([data-active])]:bg-text focus-visible:outline-accent relative h-[7.5px] w-[7.5px] max-w-[45px] min-w-[calc(37.5px_*_var(--swell)_*_var(--progress-intro,1)_+_7.5px)] cursor-pointer overflow-hidden rounded-[5px] transition-[background-color] duration-[250ms] [--reach:max(var(--span),-1_*_var(--span))] [--span:calc(var(--item-index,0)_-_var(--autoplay-progress,0))] [--swell:max(min(1_-_var(--reach),1),0)] before:absolute before:-inset-[7.5px] before:content-[''] focus-visible:outline-2 focus-visible:outline-offset-[3px] [&[data-active]]:pointer-events-none [&[data-active]]:cursor-default"
+        class="bg-text/50 [&:hover:not([data-active])]:bg-text relative h-[7.5px] w-[7.5px] max-w-[45px] min-w-[calc(37.5px_*_var(--swell)_*_var(--progress-intro,1)_+_7.5px)] cursor-pointer overflow-hidden rounded-[5px] transition-[background-color] duration-[250ms] [--reach:max(var(--span),-1_*_var(--span))] [--span:calc(var(--item-index,0)_-_var(--autoplay-progress,0))] [--swell:max(min(1_-_var(--reach),1),0)] before:absolute before:-inset-[7.5px] before:content-[''] [&[data-active]]:pointer-events-none [&[data-active]]:cursor-default"
       >
         <span
           data-fill

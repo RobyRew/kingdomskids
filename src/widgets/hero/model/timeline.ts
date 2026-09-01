@@ -72,10 +72,12 @@ function ordered(drawing: SVGSVGElement) {
   );
 }
 
+const ledge = "top 120px";
+
 function drive(frame: HTMLElement, onSettled: () => void) {
   return {
     trigger: frame,
-    start: "top 0%",
+    start: ledge,
     end: "+=250%",
     scrub: 1,
     once: true,
@@ -129,7 +131,7 @@ export function hero(root: HTMLElement) {
 
   Trigger.create({
     trigger: parts.frame,
-    start: "top 0%",
+    start: ledge,
     end: "+=250%",
     pin: true,
   });

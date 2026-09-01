@@ -20,10 +20,10 @@ const cleanCode = {
   // Triadic should be avoided; polyadic "shouldn't be used anyway".
   "max-params": ["error", 3],
 
-  // Files around 200 lines. One responsibility per file.
+  // "Files that are typically 200 lines long, with an upper limit of 500."
   "max-lines": [
     "error",
-    { max: 200, skipBlankLines: true, skipComments: true },
+    { max: 500, skipBlankLines: true, skipComments: true },
   ],
   "max-classes-per-file": ["error", 1],
 

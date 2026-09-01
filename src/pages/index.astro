@@ -1,15 +1,27 @@
 ---
 import Layout from "@/shared/layout/ui/Layout.astro";
+import Navbar from "@/widgets/navbar/ui/Navbar.astro";
+import Ribbon from "@/widgets/ribbon/ui/Ribbon.astro";
 import Hero from "@/widgets/hero/ui/Hero.astro";
 import Antiphon from "@/widgets/antiphon/ui/Antiphon.astro";
 import Mission from "@/widgets/mission/ui/Mission.astro";
 ---
 
 <Layout title="Kingdom's Kids">
-  <main>
-    <Hero />
-    <Antiphon />
-    <Mission />
-    <div class="h-[100svh]"></div>
-  </main>
+  <div class="bg-background grid gap-[120px]">
+    <header>
+      <Navbar />
+      <Ribbon />
+    </header>
+
+    <main class="grid gap-[120px]">
+      <Hero />
+
+      <div class="bg-primary grid gap-[120px]">
+        <Antiphon />
+        <Mission />
+        <div class="h-[100svh]"></div>
+      </div>
+    </main>
+  </div>
 </Layout>

@@ -2,26 +2,17 @@
 import Drawing from "@/widgets/hero/ui/jesus.svg";
 ---
 
-<section data-hero class="[container-type:inline-size] grid">
-  <article class="bg-background pt-[120px]">
-    <div
-      data-pin
-      data-lock
-      class="relative grid min-h-[100svh] place-items-center"
-    >
-      <div
-        aria-hidden="true"
-        class="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden"
-      >
-        <Drawing
-          data-drawing
-          class="text-secondary w-[87.5cqw] max-w-[1260px]"
-        />
-      </div>
+<section data-hero class="bg-background [container-type:inline-size]">
+  <div data-pin data-lock class="relative grid place-items-center">
+    <Drawing
+      data-drawing
+      aria-hidden="true"
+      class="text-secondary pointer-events-none w-[87.5cqw] max-w-[1260px] [grid-area:1/1]"
+    />
 
+    <figure class="relative w-[87.5cqw] max-w-[1260px] [grid-area:1/1]">
       <blockquote
         cite="https://www.biblegateway.com/passage/?search=Matthew%2028%3A19"
-        class="relative w-[87.5cqw] max-w-[1260px]"
       >
         <p
           data-line
@@ -30,21 +21,21 @@ import Drawing from "@/widgets/hero/ui/jesus.svg";
           <span data-intro class="inline-block"
             ><span class="text-accent">Jesus</span> said</span
           ><span data-verse
-            >: "Therefore go and make <span class="text-accent">disciples</span> of
-            all <span class="text-accent"> nations</span>, baptizing them in the
-            name of the Father and of the Son and of the Holy Spirit."</span
+            >: "Therefore go and make <span class="text-accent">disciples</span>
+            of all <span class="text-accent"> nations</span>, baptizing them in
+            the name of the Father and of the Son and of the Holy Spirit."</span
           >
         </p>
-        <div class="mt-[40px] overflow-hidden">
-          <cite
-            data-reference
-            class="block text-[15px] font-[15] tracking-widest not-italic"
-            >MATTHEW 28:19</cite
-          >
-        </div>
       </blockquote>
-    </div>
-  </article>
+      <figcaption class="mt-[40px] overflow-hidden">
+        <cite
+          data-reference
+          class="block text-[15px] font-[15] tracking-widest not-italic"
+          >MATTHEW 28:19</cite
+        >
+      </figcaption>
+    </figure>
+  </div>
 </section>
 
 <script>

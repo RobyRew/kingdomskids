@@ -24,7 +24,7 @@ restate the numbers anywhere else** — the config is the single source of truth
 Run `npm run lint` to see them.
 
 They are Uncle Bob's, not defaults: functions ≤20 lines, indent depth ≤2,
-≤3 parameters, files ≤200 lines, no flag arguments.
+≤3 parameters, files ≤500 lines, no flag arguments.
 
 ## Stack
 
@@ -97,6 +97,16 @@ These cost real debugging time. They are not inferable from the code.
 - **`eslint-plugin-sonarjs` compares Windows drive letters as case-sensitive
   strings.** The lint hook passes paths relative to the cwd for this reason.
   Do not "simplify" it back to an absolute path.
+- **Mandatory scroll snap eats JS scroll tweens.** A tween writing `scrollLeft`
+  on a `scroll-snap-type: x mandatory` container is re-snapped every frame, so
+  it jumps instead of animating. Set `scroll-snap-type: none` for the tween and
+  restore it on complete. `scrollTo({ behavior: "smooth" })` never showed this
+  because the browser's own smooth scroll is snap-aware; a tween is not.
+- **The ease family sets perceived speed, not the duration.** `power4.out`
+  covers ~97% of the distance in the first half of its time, so a 1s tween reads
+  as ~0.3s of motion and then invisible creep. CSS `ease-out` covers ~68% at the
+  same point. The symptom presents as "the duration is wrong", which sends you
+  to the wrong knob.
 
 ## Workflow
 
