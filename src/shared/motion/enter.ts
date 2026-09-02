@@ -28,7 +28,7 @@ function group(parts: HTMLElement[]) {
     .from(parts, { opacity: 0, duration: 1 }, 0);
 }
 
-export function reveal() {
-  const parts = [...document.querySelectorAll<HTMLElement>("[data-rise]")];
+export function enter() {
+  const parts = [...document.querySelectorAll<HTMLElement>("[data-enter]")];
   gather(parts).forEach(group);
 }

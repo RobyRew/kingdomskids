@@ -56,24 +56,6 @@ function popped(response: number) {
   return { ease: spring(spec), duration: spec.duration };
 }
 
-const rise = 200;
-const spill = 35;
-const bead = 50;
-const squat = 30;
-const stub = 35;
-const wide = 70;
-const slim = 25;
-const tall = 70;
-const swell = "--scale";
-const alpha = "--alpha";
-
-const bouncy = paced(100, 10, 1.25);
-const steady = paced(100, 20, 0.95);
-const dart = paced(200, 20, 0.75);
-const supple = paced(100, 8, 1.75);
-const snap = popped(0.25);
-const glide = popped(0.65);
-
 interface Bubble {
   element: HTMLElement;
   skin: HTMLElement;
@@ -99,16 +81,16 @@ function anchor(parts: Parts) {
 }
 
 function hide(parts: Parts, dots: HTMLButtonElement[]) {
-  gsap.set(parts.lift, { y: rise });
+  gsap.set(parts.lift, { y: 200 });
   gsap.set(parts.seed, {
     scale: 1.25,
     opacity: 0,
-    width: slim,
-    height: tall,
+    width: 25,
+    height: 70,
     xPercent: -50,
     yPercent: -50,
   });
-  gsap.set(dots, { x: spill, opacity: 0 });
+  gsap.set(dots, { x: 35, opacity: 0 });
   gsap.set(parts.toggle, { opacity: 0, scale: 0.5 });
 }
 
@@ -121,11 +103,15 @@ function curtain(parts: Parts, dots: HTMLButtonElement[]) {
 
   hide(parts, dots);
   parts.bubbles.forEach((bubble, index) => {
-    gsap.set(bubble.element, { x: shift[index] ?? 0, opacity: 0, [alpha]: 0 });
-    gsap.set(bubble.skin, { height: squat });
+    gsap.set(bubble.element, {
+      x: shift[index] ?? 0,
+      opacity: 0,
+      ["--alpha"]: 0,
+    });
+    gsap.set(bubble.skin, { height: 30 });
   });
-  gsap.set(stadium.skin, { [swell]: 1.25, width: stub });
-  gsap.set(circle.skin, { [swell]: 0, width: wide });
+  gsap.set(stadium.skin, { ["--scale"]: 1.25, width: 35 });
+  gsap.set(circle.skin, { ["--scale"]: 0, width: 70 });
 }
 
 function faces(parts: Parts) {
@@ -134,11 +120,11 @@ function faces(parts: Parts) {
 
 function arrive(show: gsap.core.Timeline, parts: Parts) {
   show
-    .to(parts.lift, { y: 0, ...bouncy }, 0)
+    .to(parts.lift, { y: 0, ...paced(100, 10, 1.25) }, 0)
     .set(faces(parts), { opacity: 1 }, 0.025)
     .set(parts.seed, { opacity: 1 }, 0.025)
-    .to(parts.seed, { scale: 0.75, ...snap }, 0.025)
-    .to(parts.seed, { height: bead, ...supple }, 0.15)
+    .to(parts.seed, { scale: 0.75, ...popped(0.25) }, 0.025)
+    .to(parts.seed, { height: 50, ...paced(100, 8, 1.75) }, 0.15)
     .set(parts.seed, { opacity: 0 }, 0.5);
 }
 
@@ -147,13 +133,13 @@ function spread(show: gsap.core.Timeline, parts: Parts, rest: number) {
   if (!stadium || !circle) return;
 
   show
-    .to(stadium.skin, { [swell]: 1, ...snap }, 0.25)
-    .to(stadium.element, { x: 0, ...steady }, 0.5)
-    .to(stadium.skin, { width: rest, ...bouncy }, 0.5)
-    .to(circle.element, { x: 0, ...steady }, 0.55)
-    .to(circle.skin, { [swell]: 1, ...glide }, 0.55)
-    .to(stadium.skin, { height: bead, ...bouncy }, 0.75)
-    .to(circle.skin, { width: bead, height: bead, ...bouncy }, 0.75);
+    .to(stadium.skin, { ["--scale"]: 1, ...popped(0.25) }, 0.25)
+    .to(stadium.element, { x: 0, ...paced(100, 20, 0.95) }, 0.5)
+    .to(stadium.skin, { width: rest, ...paced(100, 10, 1.25) }, 0.5)
+    .to(circle.element, { x: 0, ...paced(100, 20, 0.95) }, 0.55)
+    .to(circle.skin, { ["--scale"]: 1, ...popped(0.65) }, 0.55)
+    .to(stadium.skin, { height: 50, ...paced(100, 10, 1.25) }, 0.75)
+    .to(circle.skin, { width: 50, height: 50, ...paced(100, 10, 1.25) }, 0.75);
 }
 
 function ready(parts: Parts) {
@@ -169,12 +155,16 @@ function land(
   if (!stadium) return;
 
   show
-    .to(dots, { x: 0, ...dart, stagger: 0.025 }, 0.75)
+    .to(dots, { x: 0, ...paced(200, 20, 0.75), stagger: 0.025 }, 0.75)
     .to(dots, { opacity: 1, duration: 0.1, ease: "power1.in" }, 0.75)
-    .to(stadium.element, { "--progress-intro": 1, ...dart }, 0.75)
+    .to(
+      stadium.element,
+      { "--progress-intro": 1, ...paced(200, 20, 0.75) },
+      0.75,
+    )
     .to(parts.toggle, { opacity: 1, duration: 0.1, ease: "power1.in" }, 0.95)
     .to(parts.toggle, { scale: 1, duration: 0.25, ease: "power1.out" }, 0.95)
-    .to(faces(parts), { [alpha]: 1, ...steady }, 1)
+    .to(faces(parts), { ["--alpha"]: 1, ...paced(100, 20, 0.95) }, 1)
     .call(() => ready(parts), undefined, 0.85);
 }
 

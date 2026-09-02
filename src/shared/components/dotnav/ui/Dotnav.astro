@@ -1,6 +1,6 @@
 ---
-import Pause from "@/shared/dotnav/ui/pause.svg";
-import Play from "@/shared/dotnav/ui/play.svg";
+import Pause from "@/shared/components/dotnav/ui/pause.svg";
+import Play from "@/shared/components/dotnav/ui/play.svg";
 
 const material =
   "bg-[color-mix(in_srgb,color-mix(in_srgb,var(--color-secondary)_35%,var(--color-primary))_calc(100%_-_var(--alpha,0)_*_30%),transparent)] backdrop-blur-[calc(6.25px_*_(2_-_var(--alpha,0)))] [-webkit-backdrop-filter:blur(calc(6.25px_*_(2_-_var(--alpha,0))))]";
@@ -61,7 +61,7 @@ const skin = `${material} absolute top-1/2 left-1/2 -z-10 h-[50px] w-[50px] roun
 </div>
 
 <script>
-  import { dotnav } from "@/shared/dotnav/model/timeline";
+  import { dotnav } from "@/shared/components/dotnav/model/timeline";
 
   const navs = document.querySelectorAll<HTMLElement>("[data-dotnav]");
   navs.forEach((nav) => dotnav(nav));

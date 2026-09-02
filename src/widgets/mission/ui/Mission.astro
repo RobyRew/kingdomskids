@@ -1,37 +1,46 @@
 ---
-import Carousel from "@/shared/carousel/ui/Carousel.astro";
-import Dotnav from "@/shared/dotnav/ui/Dotnav.astro";
+import Carousel from "@/shared/components/carousel/ui/Carousel.astro";
+import Dotnav from "@/shared/components/dotnav/ui/Dotnav.astro";
 ---
 
-<section data-mission class="bg-primary">
+<section data-mission>
   <Carousel>
+    <p
+      slot="headline"
+      data-passage
+      data-enter
+      class="text-[50px] leading-tight font-semibold tracking-tight"
+    >
+      So we did<span class="text-accent">.</span>
+    </p>
+
     <li
       data-card
-      data-rise
+      data-enter
       class="bg-background grid place-items-center rounded-[30px]"
     >
     </li>
     <li
       data-card
-      data-rise
+      data-enter
       class="bg-background grid place-items-center rounded-[30px]"
     >
     </li>
     <li
       data-card
-      data-rise
+      data-enter
       class="bg-background grid place-items-center rounded-[30px]"
     >
     </li>
     <li
       data-card
-      data-rise
+      data-enter
       class="bg-background grid place-items-center rounded-[30px]"
     >
     </li>
     <li
       data-card
-      data-rise
+      data-enter
       class="bg-background grid place-items-center rounded-[30px]"
     >
     </li>

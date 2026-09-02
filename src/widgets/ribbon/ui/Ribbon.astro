@@ -1,13 +1,25 @@
----
-import Ribbon from "@/shared/ribbon/ui/Ribbon.astro";
----
+<div
+  data-ribbon
+  class="h-[50px] overflow-clip text-[15px] font-[400] tracking-[-0.016em]"
+>
+  <div
+    data-veil
+    class="bg-primary text-text grid h-full w-full place-items-center"
+  >
+    <p>
+      Welcome to the development of the new <a
+        data-link
+        href="https://kingdomskids.org"
+        aria-label="Visit kingdomskids.org"
+        class="text-accent hover:underline">Kingdom's Kids Ministry</a
+      > website.
+    </p>
+  </div>
+</div>
 
-<Ribbon>
-  <p>
-    Welcome to the development of the new <a
-      data-link
-      href="https://kingdomskids.org"
-      class="text-accent hover:underline">Kingdom's Kids Ministry</a
-    > website.
-  </p>
-</Ribbon>
+<script>
+  import { ribbon } from "@/widgets/ribbon/model/timeline";
+
+  const roots = document.querySelectorAll<HTMLElement>("[data-ribbon]");
+  roots.forEach((root) => ribbon(root));
+</script>

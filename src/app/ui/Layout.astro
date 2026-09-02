@@ -1,6 +1,8 @@
 ---
-import "@/shared/styles/config/global.css";
-import font from "@/shared/styles/config/sf.woff2?url";
+import "@/shared/styles/global.css";
+import font from "@/shared/styles/sf.woff2?url";
+import Navbar from "@/widgets/navbar/ui/Navbar.astro";
+import Ribbon from "@/widgets/ribbon/ui/Ribbon.astro";
 
 interface Props {
   title: string;
@@ -19,7 +21,12 @@ const { title } = Astro.props;
   </head>
   <body>
     <div id="smooth-wrapper">
-      <div id="smooth-content">
+      <div id="smooth-content" class="bg-background grid gap-[120px]">
+        <header>
+          <Navbar />
+          <Ribbon />
+        </header>
+
         <slot />
       </div>
     </div>
@@ -27,9 +34,9 @@ const { title } = Astro.props;
 </html>
 
 <script>
-  import { scroll } from "@/shared/scroll/lib/smoother";
-  import { reveal } from "@/shared/reveal/model/timeline";
+  import { scroll } from "@/shared/motion/scroll";
+  import { enter } from "@/shared/motion/enter";
 
   scroll();
-  reveal();
+  enter();
 </script>

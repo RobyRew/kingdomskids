@@ -1,10 +1,5 @@
 import gsap from "gsap";
 
-const drop = 1;
-const hold = 1;
-const fade = 1;
-const ease = "power1.inOut";
-
 interface Parts {
   veil: HTMLElement;
   links: HTMLElement[];
@@ -58,10 +53,10 @@ function dress(parts: Parts, hues: Hues) {
 
 function entry(parts: Parts, rest: Skin) {
   gsap
-    .timeline({ defaults: { ease } })
-    .to(parts.veil, { yPercent: 0, duration: drop }, 0)
-    .to(parts.veil, { ...rest.veil, duration: fade }, drop + hold)
-    .to(parts.links, { color: rest.link, duration: fade }, drop + hold);
+    .timeline({ defaults: { ease: "power1.inOut" } })
+    .to(parts.veil, { yPercent: 0, duration: 1 }, 0)
+    .to(parts.veil, { ...rest.veil, duration: 1 }, 2)
+    .to(parts.links, { color: rest.link, duration: 1 }, 2);
 }
 
 export function ribbon(root: HTMLElement) {

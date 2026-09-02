@@ -12,12 +12,7 @@ declare global {
   }
 }
 
-const dwell = 6.15;
-const offset = 0.15;
-const sweep = 1;
 const glide = Ease.create("glide", "M0,0 C0,0 0.60,1 1,1");
-const lift = 30;
-const perch = 100;
 const mode = "data-state";
 const playing = "playing";
 const paused = "paused";
@@ -93,12 +88,12 @@ function land(parts: Parts, beat: gsap.core.Tween, dest: number) {
   gsap.killTweensOf(parts.track);
   gsap.to(parts.track, {
     scrollLeft: target(parts.track, card),
-    duration: sweep,
+    duration: 1,
     ease: glide,
     onStart: () => loosen(parts.track),
     onComplete: () => tighten(parts.track),
   });
-  gsap.delayedCall(sweep - offset, () => renew(parts, beat));
+  gsap.delayedCall(0.85, () => renew(parts, beat));
 }
 
 function idle(parts: Parts) {
@@ -143,7 +138,7 @@ function clock(parts: Parts) {
 
   const beat: gsap.core.Tween = gsap.to(counter, {
     pass: 1,
-    duration: dwell,
+    duration: 6.15,
     ease: "none",
     paused: true,
     onComplete: () => next(parts, beat),
@@ -232,9 +227,9 @@ function watch(parts: Parts, beat: gsap.core.Tween) {
 function drift(nav: HTMLElement, box: HTMLElement, slide: Slide) {
   const frame = box.getBoundingClientRect();
   const tall = nav.offsetHeight;
-  const home = frame.bottom - perch - tall;
-  const reach = home - frame.top - lift;
-  const want = window.innerHeight - lift - tall - home;
+  const home = frame.bottom - 100 - tall;
+  const reach = home - frame.top - 30;
+  const want = window.innerHeight - 30 - tall - home;
 
   slide(gsap.utils.clamp(-reach, 0, want));
 }
@@ -257,7 +252,7 @@ function trail(root: HTMLElement) {
 }
 
 function prime(parts: Parts, beat: gsap.core.Tween) {
-  parts.root.style.setProperty("--dwell", `${dwell + offset}s`);
+  parts.root.style.setProperty("--dwell", "6.15s");
   parts.root.setAttribute(mode, playing);
   if (!parts.root.querySelector("[data-dotnav]")) arm(parts, beat);
   pulse(parts.root, beat);

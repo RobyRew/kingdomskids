@@ -1,0 +1,15 @@
+---
+import Hero from "@/widgets/hero/ui/Hero.astro";
+import Mission from "@/widgets/mission/ui/Mission.astro";
+---
+
+<main class="grid [&>*]:pt-[150px] [&>*]:pb-[200px]">
+  <Hero />
+
+  <div
+    class="grid gap-[120px] bg-[linear-gradient(to_bottom,var(--color-background),var(--color-primary)_150px)]"
+  >
+    <Mission />
+    <div class="h-[100svh]"></div>
+  </div>
+</main>

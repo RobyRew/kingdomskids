@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "@/shared/carousel/ui/style.css";
-@import "@/shared/dotnav/ui/style.css";
+@import "@/shared/components/carousel/ui/style.css";
+@import "@/shared/components/dotnav/ui/style.css";
 
 @font-face {
   font-family: "SF Pro";
