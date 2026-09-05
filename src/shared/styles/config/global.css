@@ -1,4 +1,9 @@
 @import "tailwindcss";
+/* The shared design system: the glass material, the Apple control set, and the
+   Tailwind names for both. This site has almost no chrome yet — the carousel
+   cards are still empty — so the point of wiring it in now is that whatever
+   lands in them is already on-system and already has a dark theme. */
+@import "@robyrew/web-config/theme.css";
 @import "@/shared/carousel/ui/style.css";
 @import "@/shared/dotnav/ui/style.css";
 
@@ -14,12 +19,38 @@
   --font-sans: "SF Pro", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Kingdom's Kids keeps its own identity: the logo orange is the accent, and the
+   ground stays light. Only these are overridden — everything else in the
+   control set derives from them. Written at (0,2,0) for every theme state,
+   because @robyrew/ui themes at :root[data-theme="light"] and a bare :root
+   would lose to it. */
+:root:not([data-theme]),
+:root[data-theme] {
+  --accent: rgb(255, 135, 50);
+  --accent-soft: rgb(255 135 50 / 0.12);
+  --ground: rgb(255, 255, 255);
+  --ground-2: rgb(245, 245, 250);
+  --panel: rgb(255, 255, 255);
+  --ink: rgb(30, 30, 35);
+  --ink-2: rgb(90, 90, 100);
+  --ink-3: rgb(140, 140, 150);
+  --hair: rgb(225, 225, 232);
+  --hair-soft: rgb(238, 238, 244);
+
+  /* A softer, rounder card than the 16px house default — this is a children's
+     site, and the carousel was already at 30px. */
+  --rw-r-card: 30px;
+  --rw-r-ctl: 14px;
+}
+
 @theme {
-  --color-text: rgb(30, 30, 35);
-  --color-background: rgb(255, 255, 255);
-  --color-primary: rgb(245, 245, 250);
-  --color-secondary: rgb(210, 210, 215);
-  --color-accent: rgb(255, 135, 50);
+  /* The site's existing colour names, now sourced from the shared tokens so
+     there is one set of values rather than two that drift apart. */
+  --color-text: var(--ink);
+  --color-background: var(--ground);
+  --color-primary: var(--ground-2);
+  --color-secondary: var(--hair);
+  --color-accent: var(--accent);
 }
 
 @layer base {
