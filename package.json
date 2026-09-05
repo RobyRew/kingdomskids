@@ -19,7 +19,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
-    "@robyrew/web-config": "github:RobyRew/web-config#v0.1.1",
+    "@robyrew/web-config": "github:RobyRew/web-config#v0.2.0",
     "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.7.0",
