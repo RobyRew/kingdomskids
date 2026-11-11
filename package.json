@@ -3,32 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=26"
+  },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "npm run check && astro build",
     "preview": "astro preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check": "astro sync && node node_modules/typescript-7/bin/tsc --noEmit && node scripts/astro-check.mjs"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.2",
-    "gsap": "^3.15.0",
-    "tailwindcss": "^4.3.3"
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.10",
+    "gsap": "^3.15.1",
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/language-server": "^2.17.3",
     "@eslint/js": "^10.0.1",
-    "@robyrew/web-config": "github:RobyRew/web-config#v0.2.0",
-    "eslint": "^10.8.1",
+    "@robyrew/web-config": "github:RobyRew/web-config#v0.4.0",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.7.0",
-    "eslint-plugin-sonarjs": "^4.2.0",
-    "prettier": "^3.9.6",
+    "eslint-plugin-sonarjs": "^4.2.2",
+    "prettier": "^3.10.0",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.66.0"
+    "typescript": "^6.0.3",
+    "typescript-7": "npm:typescript@^7.0.2",
+    "typescript-eslint": "^8.72.2"
   },
   "prettier": {
     "plugins": [
