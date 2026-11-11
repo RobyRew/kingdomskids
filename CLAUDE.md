@@ -29,15 +29,21 @@ They are Uncle Bob's, not defaults: functions ≤20 lines, indent depth ≤2,
 ## Stack
 
 - **Astro 7** — no React in phase 1. Add islands only when something needs state.
-- **TypeScript 5.x** — **YOU MUST NOT upgrade to 7.** `@astrojs/check` peer-requires `^5 || ^6`.
+- **TypeScript 7 + 6, side by side.** `typescript-7` (an npm alias) runs
+  `tsc --noEmit`. The root `typescript` stays on 6.x because TypeScript 7 ships
+  no JavaScript API, and both `typescript-eslint` (peer `<6.1.0`) and Astro's
+  checker (`scripts/astro-check.mjs`, via `@astrojs/language-server`) load it.
+  Do not move the root `typescript` to 7 until `typescript-eslint` accepts it.
 - **GSAP** — ScrollTrigger, ScrollSmoother, SplitText, DrawSVG. All free since
   Webflow.
 - **Tailwind 4** via `@tailwindcss/vite`. There is no `postcss.config`.
 - **Prettier** owns all formatting. Never hand-format.
 
-`npm run build` is `astro check && astro build`. **The check step is not
-optional.** `astro build` alone is transpile-only — a probe with a wrong
-argument type and a nonexistent property compiled successfully, exit 0.
+`npm run build` is `npm run check && astro build`, and `check` is
+`astro sync`, TypeScript 7's `tsc --noEmit`, then Astro's checker on
+TypeScript 6. **The check step is not optional.** `astro build` alone is
+transpile-only — a probe with a wrong argument type and a nonexistent property
+compiled successfully, exit 0.
 
 ## Architecture
 

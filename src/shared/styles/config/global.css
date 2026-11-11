@@ -21,13 +21,16 @@
 
 /* Kingdom's Kids keeps its own identity: the logo orange is the accent, and the
    ground stays light. Only these are overridden — everything else in the
-   control set derives from them. Written at (0,2,0) for every theme state,
-   because @robyrew/ui themes at :root[data-theme="light"] and a bare :root
-   would lose to it. */
-:root:not([data-theme]),
-:root[data-theme] {
+   control set derives from them. A bare unlayered :root is enough: the house
+   tokens sit in the components layer, so this block wins in every theme state.
+   The palette is light in every theme, so native controls follow it, and a
+   label on the orange takes the dark ink: white on it is about 2.4:1, which
+   the house light theme would otherwise hand out as --on-accent. */
+:root {
+  color-scheme: light;
   --accent: rgb(255, 135, 50);
   --accent-soft: rgb(255 135 50 / 0.12);
+  --on-accent: rgb(30, 30, 35);
   --ground: rgb(255, 255, 255);
   --ground-2: rgb(245, 245, 250);
   --panel: rgb(255, 255, 255);

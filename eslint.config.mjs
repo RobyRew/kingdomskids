@@ -71,5 +71,12 @@ export default [
   // the file path and its computed topDir disagree. Test-only rule, no tests.
   { rules: { "sonarjs/no-skipped-tests": "off" } },
   { files: ["src/**/*.{ts,astro}"], rules: cleanCode },
+  // Build scripts run in Node, not the browser.
+  {
+    files: ["scripts/**/*.mjs"],
+    languageOptions: {
+      globals: { URL: "readonly", console: "readonly", process: "readonly" },
+    },
+  },
   prettier,
 ];
